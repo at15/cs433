@@ -1,5 +1,7 @@
 # Upload video stream to HDFS
 
+DUE: 10-08
+
 ## generate video stream use vlc
 
 - [ ] config vlc
