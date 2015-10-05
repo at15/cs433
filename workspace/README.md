@@ -39,3 +39,7 @@ java -version
 ````
 
 You can try the `setup_jdk.sh` in scripts folder
+
+## Config hadoop
+
+`wget http://mirrors.cnnic.cn/apache/hadoop/common/stable/hadoop-2.7.1.tar.gz`
