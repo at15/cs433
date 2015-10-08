@@ -41,3 +41,7 @@ so the step is
 receive data through rtp using jmf
 
 - http://www.cs.odu.edu/~cs778/spring04/lectures/jmfsolutions/examplesindex.html
+
+A more up to date api for rtp
+
+- https://github.com/biasedbit/efflux (netty3.2 though ... )
