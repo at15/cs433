@@ -27,13 +27,13 @@ public class HDFSClient {
         FileSystem fs = FileSystem.get(new URI("hdfs://localhost:9000"),conf);
 
         FSDataOutputStream fo = fs.create(p);
-//        byte[] buffer = new byte[1024];
-//        int index;
-//        while (-1 != (index = bi.read(buffer, 0, buffer.length))) {
-//            fo.write(buffer, 0, index);
-//        }
-//        fo.close();
-//        bi.close();
-//        is.close();
+        byte[] buffer = new byte[1024];
+        int index;
+        while (-1 != (index = bi.read(buffer, 0, buffer.length))) {
+            fo.write(buffer, 0, index);
+        }
+        fo.close();
+        bi.close();
+        is.close();
     }
 }
