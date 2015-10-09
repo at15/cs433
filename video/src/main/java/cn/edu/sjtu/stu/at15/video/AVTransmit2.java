@@ -159,6 +159,7 @@ public class AVTransmit2 {
         // Program the tracks.
         for (int i = 0; i < tracks.length; i++) {
             Format format = tracks[i].getFormat();
+            System.out.println(format);
             if (tracks[i].isEnabled()) {
 
                 supported = tracks[i].getSupportedFormats();
