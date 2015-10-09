@@ -16,7 +16,7 @@ import java.net.URI;
  */
 public class HDFSClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(HDFSClient.class);
-    
+
     public void upload(String src, String dst) throws Exception {
         // TODO: check file and catch
         File srcFile = new File(src);
