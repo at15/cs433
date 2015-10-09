@@ -5,6 +5,8 @@ import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.URI;
@@ -13,27 +15,29 @@ import java.net.URI;
  * Created by at15 on 10/9/2015.
  */
 public class HDFSClient {
-    public static void main(String[] args) throws Exception {
-        Path p = new Path("/usr/media/t.mp4");
-        File file = new File("video/t.mp4");
+    private static final Logger LOGGER = LoggerFactory.getLogger(HDFSClient.class);
+    
+    public void upload(String src, String dst) throws Exception {
+        // TODO: check file and catch
+        File srcFile = new File(src);
+        FileInputStream inputStream = new FileInputStream(srcFile);
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
 
-        FileInputStream is = new FileInputStream(file);
-        BufferedInputStream bi = new BufferedInputStream(is);
+        Configuration conf = new Configuration();
+        FileSystem hdfs = FileSystem.get(new URI("hdfs://localhost:9000"), conf);
+        Path dstPath = new Path(dst);
 
-        Configuration conf= new Configuration();
-//        conf.addResource(new Path("etc/core-site.xml"));
-//        conf.addResource(new Path("etc/hdfs-site.xml"));
-//        FileSystem fs = FileSystem.get(new URI("hdfs://192.168.33.10:50070"),conf);
-        FileSystem fs = FileSystem.get(new URI("hdfs://localhost:9000"),conf);
-
-        FSDataOutputStream fo = fs.create(p);
+        FSDataOutputStream writer = hdfs.create(dstPath);
         byte[] buffer = new byte[1024];
         int index;
-        while (-1 != (index = bi.read(buffer, 0, buffer.length))) {
-            fo.write(buffer, 0, index);
+        LOGGER.info("start uploading " + src + " to " + dst);
+        while (-1 != (index = bufferedInputStream.read(buffer, 0, buffer.length))) {
+            writer.write(buffer, 0, index);
         }
-        fo.close();
-        bi.close();
-        is.close();
+        writer.close();
+        inputStream.close();
+        bufferedInputStream.close();
+
+        LOGGER.info("finish uploading " + src + " to " + dst);
     }
 }

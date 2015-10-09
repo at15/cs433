@@ -1,7 +1,8 @@
 <configuration>
     <property>
         <name>fs.defaultFS</name>
-        <value>hdfs://localhost:9000</value>
+        <!-- support connect to hdfs from remote, ie:hadoop runs in vagrant, upload data from host windows machine -->
+        <value>hdfs://0.0.0.0:9000</value>
     </property>
     <property>
         <name>hadoop.tmp.dir</name>

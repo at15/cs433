@@ -44,7 +44,7 @@ public class StreamServer {
         );
 
         while (!shouldStop){
-            LOGGER.debug("wait for vlc to finish streaming. ");
+            LOGGER.debug("wait for vlc to finish streaming, let's take a nap");
             Thread.sleep(1000);
             if(mediaPlayer.getTime() == -1){
                 mediaPlayer.stop();
