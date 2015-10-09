@@ -43,6 +43,13 @@ You can try the `setup_jdk.sh` in scripts folder
 ## Config hadoop
 
 - `wget http://mirrors.cnnic.cn/apache/hadoop/common/stable/hadoop-2.7.1.tar.gz`
+- change `hadoop-env.sh`, use absolute path for JAVA_HOME
+- change `core-site.xml`
+- change `hdfs-site.xml`
+- format namenode `bin/hadoop namenode -format`
+
+### FAQ
+
 - change `hadoop-env.sh` JAVA_HOME should be hard coded, otherwise when ssh to localhost, it will lost. http://stackoverflow.com/questions/20628093/java-home-is-not-set-in-hadoop
 - `java.lang.IllegalArgumentException: Invalid URI for NameNode address` forgot to set `core-site.xml` and `hdfs-site.xml` http://blog.csdn.net/xiaolang85/article/details/7975618
 - `org.apache.hadoop.hdfs.server.common.InconsistentFSStateException: Directory /tmp/hadoop-vagrant/dfs/name is in an inconsistent state: storage directory does not exist or is not accessible.` http://www.linuxidc.com/Linux/2012-03/56348.htm

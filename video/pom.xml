@@ -55,7 +55,7 @@
                                         implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>cn.edu.sjtu.stu.at15.video.MulticastSocketClient</mainClass>
+                                    <mainClass>cn.edu.sjtu.stu.at15.video.HDFSClient</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

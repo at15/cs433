@@ -2,3 +2,5 @@
 .vagrant
 *.iml
 */target
+dependency-reduced-pom.xml
+*.mp4
