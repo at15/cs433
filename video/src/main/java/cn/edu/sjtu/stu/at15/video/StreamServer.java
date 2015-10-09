@@ -1,28 +1,40 @@
 package cn.edu.sjtu.stu.at15.video;
 
 import com.sun.jna.NativeLibrary;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 
 /**
  * Created by at15 on 10/9/2015.
+ *
+ * Stream media using rtsp protocol
  */
 public class StreamServer {
+    private static final Logger LOGGER = LoggerFactory.getLogger(StreamServer.class);
 
-    public static void main(String[] args) throws Exception {
+    protected MediaPlayerFactory mediaPlayerFactory;
+    protected String options = ":sout=#rtp{sdp=rtsp://:8554/vlc}";
 
+    public StreamServer() {
+        // TODO: pass it from caller
         NativeLibrary.addSearchPath("libvlc", "C:/Program Files/VideoLAN/VLC");
-        String media = "file:///D:/pt/short.mp4";
-        String options = ":sout=#rtp{sdp=rtsp://:8554/vlc}";
+        mediaPlayerFactory = new MediaPlayerFactory();
+    }
 
-        System.out.println("Streaming '" + media + "' to '" + options + "'");
-
-        MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(args);
+    public void run(String media) throws Exception {
+        boolean shouldStop = false;
+//        String media = "file:///D:/pt/sample-thor.mp4";
         HeadlessMediaPlayer mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
-
-        mediaPlayer.addMediaPlayerEventListener(new VlcEventListener());
-
+        // TODO: listen to finished event only
+        mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter(){
+            @Override
+            public void finished(uk.co.caprica.vlcj.player.MediaPlayer mediaPlayer) {
+                LOGGER.info("finished");
+            }
+        });
         mediaPlayer.playMedia(media,
                 options,
                 ":no-sout-rtp-sap",
@@ -31,18 +43,14 @@ public class StreamServer {
                 ":sout-keep"
         );
 
-
-
-        Thread.currentThread().join();
-    }
-
-    private static String formatRtpStream(String serverAddress, int serverPort) {
-        StringBuilder sb = new StringBuilder(60);
-        sb.append(":sout=#rtp{dst=");
-        sb.append(serverAddress);
-        sb.append(",port=");
-        sb.append(serverPort);
-        sb.append(",mux=ts}");
-        return sb.toString();
+        while (!shouldStop){
+            LOGGER.debug("wait for vlc to finish streaming. ");
+            Thread.sleep(1000);
+            if(mediaPlayer.getTime() == -1){
+                mediaPlayer.stop();
+                mediaPlayer.release();
+                shouldStop = true;
+            }
+        }
     }
 }
