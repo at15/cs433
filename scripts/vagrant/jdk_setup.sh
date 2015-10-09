@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-cd ~
-curl -LO 'http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jdk-7u79-linux-x64.tar.gz' -H 'Cookie: oraclelicense=accept-securebackup-cookie'
+#cd ~
+#curl -LO 'http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jdk-7u79-linux-x64.tar.gz' -H 'Cookie: oraclelicense=accept-securebackup-cookie'
 
-tarball="jdk-7u79-linux-x64.tar.gz"
+tarball="jdk-7u79-linux-x64.gz"
 
 if [ ! -f "$tarball" ]; then
     echo "jdk tar.gz file not found, exit"
