@@ -1,6 +1,7 @@
 package cn.edu.sjtu.stu.at15.video;
 
 import com.sun.jna.NativeLibrary;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 
@@ -10,19 +11,17 @@ import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 public class StreamServer {
 
     public static void main(String[] args) throws Exception {
-//        if(args.length != 1) {
-//            System.out.println("Specify a single MRL to stream");
-//            System.exit(1);
-//        }
+
         NativeLibrary.addSearchPath("libvlc", "C:/Program Files/VideoLAN/VLC");
-//        String media = args[0];
-        String media = "file:///D:/pt/Thor - The Dark World - Trailer 2.mp4";
+        String media = "file:///D:/pt/short.mp4";
         String options = formatRtpStream("239.1.1.1", 5004);
 
         System.out.println("Streaming '" + media + "' to '" + options + "'");
 
         MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(args);
         HeadlessMediaPlayer mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
+
+        mediaPlayer.addMediaPlayerEventListener(new VlcEventListener());
 
         mediaPlayer.playMedia(media,
                 options,
@@ -31,6 +30,8 @@ public class StreamServer {
                 ":sout-all",
                 ":sout-keep"
         );
+
+
 
         Thread.currentThread().join();
     }
