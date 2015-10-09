@@ -14,7 +14,7 @@ public class StreamServer {
 
         NativeLibrary.addSearchPath("libvlc", "C:/Program Files/VideoLAN/VLC");
         String media = "file:///D:/pt/short.mp4";
-        String options = formatRtpStream("239.1.1.1", 5004);
+        String options = ":sout=#rtp{sdp=rtsp://:8554/vlc}";
 
         System.out.println("Streaming '" + media + "' to '" + options + "'");
 

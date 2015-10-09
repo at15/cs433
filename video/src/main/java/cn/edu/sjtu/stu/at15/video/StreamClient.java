@@ -20,7 +20,7 @@ public class StreamClient {
         MediaPlayer player = factory.newHeadlessMediaPlayer();
         player.addMediaPlayerEventListener(new VlcEventListener());
 
-        String mrl = "rtp://239.1.1.1:5004";
+        String mrl = "rtsp://:8554/vlc";
         // TODO: change the transcode, ife only have :file, it will show it on screen directly
 //        String options = ":sout=#transcode{vcodec=h264,venc=x264{cfr=16},scale=1,acodec=mp4a,ab=160,channels=2,samplerate=44100}:file{dst=D:/pt/t.mp4}";
         String options = "";
