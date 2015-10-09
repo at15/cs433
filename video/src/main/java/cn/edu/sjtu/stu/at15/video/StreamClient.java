@@ -23,13 +23,20 @@ public class StreamClient {
         String mrl = "rtsp://:8554/vlc";
         // TODO: change the transcode, ife only have :file, it will show it on screen directly
 //        String options = ":sout=#transcode{vcodec=h264,venc=x264{cfr=16},scale=1,acodec=mp4a,ab=160,channels=2,samplerate=44100}:file{dst=D:/pt/t.mp4}";
-        String options = "";
+        String options = ":sout=#file{dst=D:/pt/t.mp4}";
+//        String options = "";
 
         player.playMedia(mrl, options);
 
-        while (true) {
+        boolean stopped = false;
+        while (!stopped) {
             Thread.sleep(1000);
             LOGGER.debug(String.valueOf(player.getTime()));
+            if(player.getTime() == -1){
+                player.stop();
+                player.release();
+                stopped = true;
+            }
         }
 
 //        player.stop();
