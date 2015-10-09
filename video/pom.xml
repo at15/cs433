@@ -11,9 +11,17 @@
 
     <artifactId>video</artifactId>
 
+    <properties>
+        <vlcj.version>3.9.0</vlcj.version>
+    </properties>
+
 
     <dependencies>
-        
+        <dependency>
+            <groupId>uk.co.caprica</groupId>
+            <artifactId>vlcj</artifactId>
+            <version>${vlcj.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
