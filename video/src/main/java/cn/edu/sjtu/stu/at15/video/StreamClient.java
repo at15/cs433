@@ -8,6 +8,9 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 
+import java.io.File;
+import java.io.IOException;
+
 /**
  * Created by at15 on 10/9/2015.
  */
@@ -47,10 +50,23 @@ public class StreamClient {
         }
 
         mediaPlayerFactory.release();
+        writeFinishFlag(file);
     }
 
     public String getOptions(String file) {
         // ":sout=#file{dst=D:/pt/t.mp4}"
         return ":sout=#file{dst=" + file + "}";
+    }
+
+    public void writeFinishFlag(String file) throws IOException{
+        // Write the file flag for finish
+        String finishFlag = file + ".finish";
+        File flag = new File(finishFlag);
+        if(flag.exists()){
+            LOGGER.warn("finish flag already exists!");
+            return;
+        }
+        flag.createNewFile();
+        LOGGER.info("created finish flag " + finishFlag);
     }
 }
