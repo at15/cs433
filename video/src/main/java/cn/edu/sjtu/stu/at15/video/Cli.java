@@ -44,6 +44,8 @@ public class Cli {
                 String watchDir = args[1];
                 String uploadBaseUrl = args[2];
                 FolderWatcher watcher = new FolderWatcher(watchDir, uploadBaseUrl);
+                HDFSClient client = new HDFSClient();
+                watcher.setClient(client);
                 watcher.run();
             }
             return;

@@ -37,6 +37,7 @@ public class HDFSClient {
     }
 
     public void upload(File srcFile, String dst) throws IOException {
+        LOGGER.info("start uploading " + srcFile.getName() + " to " + dst);
         FileInputStream inputStream = new FileInputStream(srcFile);
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
 
@@ -45,7 +46,7 @@ public class HDFSClient {
         byte[] buffer = new byte[1024];
         int index;
 
-        LOGGER.info("start uploading " + srcFile.getName() + " to " + dst);
+
         while (-1 != (index = bufferedInputStream.read(buffer, 0, buffer.length))) {
             writer.write(buffer, 0, index);
         }

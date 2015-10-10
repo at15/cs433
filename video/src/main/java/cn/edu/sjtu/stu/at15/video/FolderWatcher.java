@@ -32,6 +32,8 @@ public class FolderWatcher {
 
     public FolderWatcher(String watchDir, String uploadBaseUrl) {
         this.watchDir = watchDir;
+        // FIXME: base url passed from commandline is wrong when using git bash
+        LOGGER.info("upload base url is " + uploadBaseUrl);
         this.uploadBaseUrl = uploadBaseUrl;
     }
 
@@ -98,6 +100,8 @@ public class FolderWatcher {
             file.delete();
         } catch (IOException ex) {
             LOGGER.warn("error uploading ", ex);
+        }catch (Exception ex){
+            LOGGER.error("unexpected exception", ex);
         }
     }
 
