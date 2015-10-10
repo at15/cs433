@@ -26,13 +26,12 @@ public class StreamServer {
 
     public void run(String media) throws Exception {
         boolean shouldStop = false;
-//        String media = "file:///D:/pt/sample-thor.mp4";
         HeadlessMediaPlayer mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
         // TODO: listen to finished event only
         mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter(){
             @Override
             public void finished(uk.co.caprica.vlcj.player.MediaPlayer mediaPlayer) {
-                LOGGER.info("finished");
+                LOGGER.info("stream finished");
             }
         });
         mediaPlayer.playMedia(media,
@@ -52,5 +51,7 @@ public class StreamServer {
                 shouldStop = true;
             }
         }
+
+        mediaPlayerFactory.release();
     }
 }

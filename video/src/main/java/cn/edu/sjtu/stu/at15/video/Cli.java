@@ -13,22 +13,29 @@ public class Cli {
             return;
         }
         if (args[0].startsWith("serve")) {
-            System.out.println("serve media file through rtsp");
             if (args.length > 1) {
                 String file = args[1];
                 // TODO: check if file exists
                 StreamServer streamServer = new StreamServer();
-                streamServer.run(args[1]);
+                streamServer.run(file);
+            }
+            return;
+        }
+        if(args[0].startsWith("receive")){
+            if(args.length > 1){
+                String file = args[1];
+                StreamClient client = new StreamClient();
+                client.run(file);
             }
         }
         if (args[0].startsWith("upload")) {
-            HDFSClient.main(args);
             if (args.length > 2) {
                 String src = args[1];
                 String dst = args[2];
                 HDFSClient client = new HDFSClient();
                 client.upload(src, dst);
             }
+            return;
         }
     }
 

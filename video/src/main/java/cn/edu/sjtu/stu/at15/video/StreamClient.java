@@ -5,6 +5,7 @@ import com.sun.jna.NativeLibrary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 
 /**
@@ -12,36 +13,44 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
  */
 public class StreamClient {
     private final static Logger LOGGER = LoggerFactory.getLogger(StreamClient.class);
+    protected MediaPlayerFactory mediaPlayerFactory;
 
-    public static void main(String[] args) throws Exception {
+    public StreamClient() {
         NativeLibrary.addSearchPath("libvlc", "C:/Program Files/VideoLAN/VLC");
+        mediaPlayerFactory = new MediaPlayerFactory();
+    }
 
-        MediaPlayerFactory factory = new MediaPlayerFactory();
-        MediaPlayer player = factory.newHeadlessMediaPlayer();
-        player.addMediaPlayerEventListener(new VlcEventListener());
+    public void run(String file) throws Exception {
+        MediaPlayer player = mediaPlayerFactory.newHeadlessMediaPlayer();
+        // TODO: change the listener
+        player.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+            @Override
+            public void finished(uk.co.caprica.vlcj.player.MediaPlayer mediaPlayer) {
+                LOGGER.info("stream finished");
+            }
+        });
 
         String mrl = "rtsp://:8554/vlc";
-        // TODO: change the transcode, ife only have :file, it will show it on screen directly
+        // TODO: allow display and save file at same time
 //        String options = ":sout=#transcode{vcodec=h264,venc=x264{cfr=16},scale=1,acodec=mp4a,ab=160,channels=2,samplerate=44100}:file{dst=D:/pt/t.mp4}";
-        String options = ":sout=#file{dst=D:/pt/t.mp4}";
-//        String options = "";
+        player.playMedia(mrl, getOptions(file));
 
-        player.playMedia(mrl, options);
-
-        boolean stopped = false;
-        while (!stopped) {
+        boolean shouldStop = false;
+        while (!shouldStop) {
             Thread.sleep(1000);
-            LOGGER.debug(String.valueOf(player.getTime()));
-            if(player.getTime() == -1){
+            LOGGER.debug("waiting for vlc to finish receiving stream");
+            if (player.getTime() == -1) {
                 player.stop();
                 player.release();
-                stopped = true;
+                shouldStop = true;
             }
         }
 
-//        player.stop();
-//
-//        player.release();
-//        factory.release();
+        mediaPlayerFactory.release();
+    }
+
+    public String getOptions(String file) {
+        // ":sout=#file{dst=D:/pt/t.mp4}"
+        return ":sout=#file{dst=" + file + "}";
     }
 }
