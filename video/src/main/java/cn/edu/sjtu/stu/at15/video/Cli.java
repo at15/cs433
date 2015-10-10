@@ -27,6 +27,16 @@ public class Cli {
                 StreamClient client = new StreamClient();
                 client.run(file);
             }
+            return;
+        }
+        if(args[0].startsWith("monitor")){
+            if(args.length > 2){
+                String watchDir = args[1];
+                String uploadBaseUrl = args[2];
+                FolderWatcher watcher = new FolderWatcher(watchDir,uploadBaseUrl);
+                watcher.run();
+            }
+            return;
         }
         if (args[0].startsWith("upload")) {
             if (args.length > 2) {

@@ -20,15 +20,23 @@ public class HDFSClient {
     protected Configuration conf;
     protected FileSystem hdfs;
 
-    public HDFSClient() throws URISyntaxException, IOException{
+    public HDFSClient() throws IOException {
         conf = new Configuration();
-        hdfs = FileSystem.get(new URI("hdfs://localhost:9000"),conf);
+        try {
+            hdfs = FileSystem.get(new URI("hdfs://localhost:9000"), conf);
+        } catch (URISyntaxException ex) {
+            throw new IOException(ex);
+        }
     }
 
     public void upload(String src, String dst) throws Exception {
         // handle the input
         // TODO: check file and catch
         File srcFile = new File(src);
+        upload(srcFile, dst);
+    }
+
+    public void upload(File srcFile, String dst) throws IOException {
         FileInputStream inputStream = new FileInputStream(srcFile);
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
 
@@ -37,7 +45,7 @@ public class HDFSClient {
         byte[] buffer = new byte[1024];
         int index;
 
-        LOGGER.info("start uploading " + src + " to " + dst);
+        LOGGER.info("start uploading " + srcFile.getName() + " to " + dst);
         while (-1 != (index = bufferedInputStream.read(buffer, 0, buffer.length))) {
             writer.write(buffer, 0, index);
         }
@@ -45,6 +53,6 @@ public class HDFSClient {
         inputStream.close();
         bufferedInputStream.close();
 
-        LOGGER.info("finish uploading " + src + " to " + dst);
+        LOGGER.info("finish uploading " + srcFile.getName() + " to " + dst);
     }
 }
