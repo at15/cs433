@@ -4,6 +4,8 @@ package cn.edu.sjtu.stu.at15.video;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 
 import org.slf4j.Logger;
@@ -37,14 +39,15 @@ public class FolderWatcher {
                         Path newPath = ((WatchEvent<Path>) watchEvent).context();
                         LOGGER.debug("file create " + newPath);
                         if(newPath.toString().endsWith(FINISH)){
-                            String finishFilePath = newPath.toAbsolutePath().toString();
+                            // NOTE: need to add watchDir to path
+                            String finishFilePath = watchDir + "/" + newPath.toString();
                             String srcFilePath = finishFilePath.substring(0,finishFilePath.length() - FINISH.length());
                             LOGGER.debug("src file path " + srcFilePath);
                             // check if src file exists
                             File srcFile = new File(srcFilePath);
                             File finishFile = new File(finishFilePath);
                             if(srcFile.exists()){
-                                LOGGER.info("need upload " + srcFile);
+                                LOGGER.info("need to upload " + srcFile);
                                 // TODO: upload to hdfs.
                             }else {
                                 LOGGER.warn("finish file point to a no existing file ");
@@ -64,6 +67,16 @@ public class FolderWatcher {
         }catch (InterruptedException ie){
             ie.printStackTrace();
         }
+    }
 
+    protected static boolean fileExists(String path){
+        BasicFileAttributes basicFileAttributes;
+        try {
+            basicFileAttributes = Files.readAttributes(Paths.get(path),BasicFileAttributes.class);
+            return true;
+        }catch (IOException ignore){
+            LOGGER.debug("trouble detecting file exist", ignore);
+            return false;
+        }
     }
 }
