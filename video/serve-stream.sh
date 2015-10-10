@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 cd ..
-java -jar video/target/video-0.0.1.jar serve video/media/sample-thor.mp4
+java -jar video/target/video-0.0.1.jar serve video/media/sample-thor.mp4 "C:/Program Files/VideoLAN/VLC"

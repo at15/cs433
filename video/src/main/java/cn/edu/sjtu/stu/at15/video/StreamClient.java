@@ -19,7 +19,12 @@ public class StreamClient {
     protected MediaPlayerFactory mediaPlayerFactory;
 
     public StreamClient() {
-        NativeLibrary.addSearchPath("libvlc", "C:/Program Files/VideoLAN/VLC");
+       this("C:/Program Files/VideoLAN/VLC");
+    }
+
+    public StreamClient(String libPath){
+        LOGGER.info("add libvlc path" + libPath);
+        NativeLibrary.addSearchPath("libvlc", libPath);
         mediaPlayerFactory = new MediaPlayerFactory();
     }
 

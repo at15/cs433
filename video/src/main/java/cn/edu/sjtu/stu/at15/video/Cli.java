@@ -16,24 +16,34 @@ public class Cli {
             if (args.length > 1) {
                 String file = args[1];
                 // TODO: check if file exists
-                StreamServer streamServer = new StreamServer();
-                streamServer.run(file);
+                StreamServer server;
+                if (args.length > 2) {
+                    server = new StreamServer(args[2]);
+                } else {
+                    server = new StreamServer();
+                }
+                server.run(file);
             }
             return;
         }
-        if(args[0].startsWith("receive")){
-            if(args.length > 1){
+        if (args[0].startsWith("receive")) {
+            if (args.length > 1) {
                 String file = args[1];
-                StreamClient client = new StreamClient();
+                StreamClient client;
+                if (args.length > 2) {
+                    client = new StreamClient(args[2]);
+                } else {
+                    client = new StreamClient();
+                }
                 client.run(file);
             }
             return;
         }
-        if(args[0].startsWith("monitor")){
-            if(args.length > 2){
+        if (args[0].startsWith("monitor")) {
+            if (args.length > 2) {
                 String watchDir = args[1];
                 String uploadBaseUrl = args[2];
-                FolderWatcher watcher = new FolderWatcher(watchDir,uploadBaseUrl);
+                FolderWatcher watcher = new FolderWatcher(watchDir, uploadBaseUrl);
                 watcher.run();
             }
             return;
@@ -51,9 +61,10 @@ public class Cli {
 
     public static void printUsage() {
         System.out.println("Usage: \n" +
-                        "- serve <file name>           stream a file in rtsp to rtsp://:8554/vlc \n" +
-                        "- receive <file name>         receive rtsp stream from rtsp://:8554/vlc and save to file \n" +
-                        "- upload <file name> <dst>    upload a file in local file system to hdfs using FSDataOutputStream \n"
+                        "- serve <file name> [libvlc path]          stream a file in rtsp to rtsp://:8554/vlc \n" +
+                        "- receive <file name> [libvlc path]        receive rtsp stream from rtsp://:8554/vlc and save to file \n" +
+                        "- upload <file name> <dst>                 upload a file in local file system to hdfs using FSDataOutputStream \n" +
+                        "- monitor <watch dir> <upload base url>    watch the tmp dir and upload video when client has finished streaming "
         );
     }
 }

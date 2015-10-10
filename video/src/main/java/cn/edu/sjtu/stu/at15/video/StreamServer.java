@@ -19,8 +19,12 @@ public class StreamServer {
     protected String options = ":sout=#rtp{sdp=rtsp://:8554/vlc}";
 
     public StreamServer() {
-        // TODO: pass it from caller
-        NativeLibrary.addSearchPath("libvlc", "C:/Program Files/VideoLAN/VLC");
+        this("C:/Program Files/VideoLAN/VLC");
+    }
+
+    public StreamServer(String libPath) {
+        LOGGER.info("add libvlc path" + libPath);
+        NativeLibrary.addSearchPath("libvlc", libPath);
         mediaPlayerFactory = new MediaPlayerFactory();
     }
 
