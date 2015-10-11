@@ -57,14 +57,16 @@ e... all the math equations ... wtf
 
 realife example 
 
+## Page 8 - 10
+
+ba la ba la 
+
 ## Pre
 
 - 数据存储在`云｀中
 - 数据需要加密
 - 数据会有经常的 CRUD 
 - 数据需要搜索(不过就不能模糊搜索了)
-
-
 
 Vocabulary
 
