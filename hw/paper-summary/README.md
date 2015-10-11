@@ -37,6 +37,25 @@ access control without disclosing the identity of the user to the cloud
 
 > Unlike [24], our scheme is resistant to replay attacks, in which a user can replace fresh data with stale data from a previous write, even if it no longer has valid claim policy
 
+## Page 4
+
+- ABE
+
+e... all the math equations ... wtf
+
+## Page 5
+
+－ ABS 
+
+## Page 6
+
+> A user Uu first registers itself with one or more trustees
+> the trustee give the user token
+> The user also constructs a claim policy Y to enable the cloud to authenticate the user. The creator does not send the message MSG as is, but uses the time stamp 􏰍 and creates HðCÞk􏰍. This is done to prevent replay attacks. 
+
+## Page 7 
+
+realife example 
 
 ## Pre
 
@@ -56,3 +75,5 @@ adversary 对手
 compromise 危害
 disclosed 公开
 stale 陈腐的
+monotone 单调
+prime 质数
