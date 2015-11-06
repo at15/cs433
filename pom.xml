@@ -10,6 +10,7 @@
     <version>0.0.1</version>
     <modules>
         <module>video</module>
+        <module>text</module>
     </modules>
 
     <properties>
