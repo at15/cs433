@@ -4,25 +4,25 @@ DUE: 10-08
 
 ## generate video stream use vlc
 
-- [ ] config vlc
-- [ ] setup multicast server
-- [ ] setup multicast client
+- [x] config vlc
+- [x] setup multicast server
+- [x] setup multicast client
 
 ## receive video stream and upload to hdfs
 
-- [ ] receive video stream and store in local folder as file. and no temporary files (? strange request)
-- [ ] use the file as cache and upload to HDFS, use FSDataOutputStream.write(buffer,0,bytesRead)
-- [ ] clean all files when upload finish.
+- [x] receive video stream and store in local folder as file. and no temporary files (? strange request)
+- [x] use the file as cache and upload to HDFS, use FSDataOutputStream.write(buffer,0,bytesRead)
+- [x] clean all files when upload finish.
 
 The teacher said store all the frames and upload as image ... which is quite strange ...
 
 so the step is
 
-- [ ] download a small video (ie: 30mb)
-- [ ] multicast this video as stream use vlc
-- [ ] receive multicast and write to file as cache
-- [ ] upload cache to hdfs
-- [ ] clean up cache.
+- [x] download a small video (ie: 30mb)
+- [x] multicast this video as stream use vlc
+- [x] receive multicast and write to file as cache
+- [x] upload cache to hdfs
+- [x] clean up cache.
 
 ## Possible enhancement
 
