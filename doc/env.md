@@ -48,7 +48,12 @@ You can try the `setup_jdk.sh` in scripts folder
 - change `hdfs-site.xml`
 - format namenode `bin/hadoop namenode -format`
 
-### FAQ
+## Usage
+
+- `sbin/start-dfs.sh` Start NameNode daemon and DataNode daemon
+- use `localhost:9000` to see the web ui for name node
+
+## FAQ
 
 - change `hadoop-env.sh` JAVA_HOME should be hard coded, otherwise when ssh to localhost, it will lost. http://stackoverflow.com/questions/20628093/java-home-is-not-set-in-hadoop
 - `java.lang.IllegalArgumentException: Invalid URI for NameNode address` forgot to set `core-site.xml` and `hdfs-site.xml` http://blog.csdn.net/xiaolang85/article/details/7975618
