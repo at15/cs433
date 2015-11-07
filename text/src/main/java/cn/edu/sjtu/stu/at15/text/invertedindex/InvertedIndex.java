@@ -1,12 +1,12 @@
 package cn.edu.sjtu.stu.at15.text.invertedindex;
 
+
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.FileInputFormat;
-import org.apache.hadoop.mapred.FileOutputFormat;
-import org.apache.hadoop.mapred.JobClient;
-import org.apache.hadoop.mapred.JobConf;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.IOException;
 
@@ -20,22 +20,24 @@ public class InvertedIndex {
         run(args[0], args[1]);
     }
 
-    public static void run(String inputPath, String outputPath) throws IOException {
-        JobConf conf = new JobConf(InvertedIndex.class);
-        conf.setJobName(jobName);
+    public static void run(String inputPath, String outputPath) throws IOException, InterruptedException, ClassNotFoundException {
+        Configuration conf = new Configuration();
+        Job job = new Job(conf, "InvertedIndex");
+        job.setJarByClass(InvertedIndex.class);
 
-        conf.setMapOutputKeyClass(Text.class);
-        conf.setMapOutputValueClass(Text.class);
-        conf.setOutputKeyClass(Text.class);
-        conf.setOutputValueClass(Text.class);
+        job.setMapperClass(Map.class);
+        job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputValueClass(Text.class);
 
-        conf.setMapperClass(Map.class);
-        conf.setCombinerClass(Combine.class);
-        conf.setReducerClass(Reduce.class);
+        job.setCombinerClass(Combine.class);
+        job.setReducerClass(Reduce.class);
 
-        FileInputFormat.addInputPath(conf, new Path(inputPath));
-        FileOutputFormat.setOutputPath(conf, new Path(outputPath));
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(Text.class);
 
-        JobClient.runJob(conf);
+        FileInputFormat.addInputPath(job, new Path(inputPath));
+        FileOutputFormat.setOutputPath(job, new Path(outputPath));
+
+        System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }
