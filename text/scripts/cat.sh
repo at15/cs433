@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 source common.sh
-${DFS} -cat /user/at15/output15/*
+${DFS} -cat /user/at15/output17/*

@@ -2,6 +2,11 @@ got the result, but is not reduced.
 
 the combine does not work ... yeah
 
+!!! http://hadoop-common.472056.n3.nabble.com/Hadoop-Reduce-is-never-called-td1812851.html
+> Thanks for your help - I found the problem.  The signature for my reduce 
+> function had Iterator instead of Iterable.  Without the right signature, it 
+> was calling the reduce method from the superclass and not mine. 
+
 I:the-man-cant-be-moved.txt	1
 I:the-man-cant-be-moved.txt	1
 I:the-man-cant-be-moved.txt	1
