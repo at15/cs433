@@ -24,6 +24,8 @@ public class Combine extends Reducer<Text, Text, Text, Text> {
             sum += Integer.parseInt(values.next().toString());
         }
         String[] wordAndName = key.toString().split(SEP);
-        context.write(new Text(wordAndName[0]), new Text(wordAndName[1] + SEP + sum));
+//        throw new IOException("debug key is " + wordAndName[0]);
+//        context.write(new Text(wordAndName[0]), new Text(wordAndName[1] + SEP + sum));
+        context.write(new Text("aaaaa"), new Text(wordAndName[1] + SEP + sum));
     }
 }

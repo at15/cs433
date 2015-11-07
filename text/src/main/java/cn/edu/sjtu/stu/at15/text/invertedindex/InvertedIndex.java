@@ -29,8 +29,9 @@ public class InvertedIndex {
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(Text.class);
 
-        job.setCombinerClass(Combine.class);
-        job.setReducerClass(Reduce.class);
+//        job.setCombinerClass(Combine.class);
+//        job.setReducerClass(Reduce.class);
+        job.setReducerClass(Combine.class);
 
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
