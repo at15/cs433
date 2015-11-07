@@ -1,6 +1,7 @@
 package cn.edu.sjtu.stu.at15.text.invertedindex;
 
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.FileInputFormat;
 import org.apache.hadoop.mapred.FileOutputFormat;
@@ -23,6 +24,8 @@ public class InvertedIndex {
         JobConf conf = new JobConf(InvertedIndex.class);
         conf.setJobName(jobName);
 
+        conf.setMapOutputKeyClass(Text.class);
+        conf.setMapOutputValueClass(IntWritable.class);
         conf.setOutputKeyClass(Text.class);
         conf.setOutputValueClass(Text.class);
 
