@@ -26,7 +26,7 @@ public class WordCount {
         conf.setJobName(jobName);
 
         conf.setOutputKeyClass(Text.class);
-        conf.setOutputValueClass(IntWritable.class);
+        conf.setOutputValueClass(Text.class);
 
         conf.setMapperClass(WordCountMapper.class);
         conf.setReducerClass(WordCountReducer.class);
