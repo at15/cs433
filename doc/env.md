@@ -46,7 +46,8 @@ You can try the `setup_jdk.sh` in scripts folder
 - change `hadoop-env.sh`, use absolute path for JAVA_HOME
 - change `core-site.xml`
 - change `hdfs-site.xml`
-- format namenode `bin/hadoop namenode -format`
+- format namenode `bin/hdfs namenode -format`
+- config ssh, you must be able to ssh to localhost, for mac user see http://stackoverflow.com/a/22255174/4116260
 
 ## Usage
 
