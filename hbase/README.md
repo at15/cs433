@@ -12,3 +12,8 @@ put 'contacts', '1', 'info:name', 'jack'
 put 'contacts', '2', 'info:name', 'mary'
 put 'contacts', '3', 'info:name', 'jason'
 ````
+
+````
+# create the index table
+create 'contacts-name-index', 'index'
+````

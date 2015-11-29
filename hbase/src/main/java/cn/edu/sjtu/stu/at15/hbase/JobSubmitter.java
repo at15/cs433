@@ -7,7 +7,12 @@ import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
+import org.apache.hadoop.hbase.mapreduce.MultiTableOutputFormat;
+import org.apache.hadoop.hbase.mapreduce.TableInputFormat;
 import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil;
+import org.apache.hadoop.hbase.protobuf.ProtobufUtil;
+import org.apache.hadoop.hbase.protobuf.generated.ClientProtos;
+import org.apache.hadoop.hbase.util.Base64;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -15,31 +20,46 @@ import org.apache.hadoop.mapreduce.lib.output.NullOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
  * Created by at15 on 15-11-29.
  */
 public class JobSubmitter {
+    // copied from https://github.com/apache/hbase/blob/master/hbase-server/src/main/java/org/apache/hadoop/hbase/mapreduce/TableMapReduceUtil.java
+
+    /**
+     * Writes the given scan into a Base64 encoded string.
+     *
+     * @param scan The scan to write out.
+     * @return The scan saved in a Base64 encoded string.
+     * @throws IOException When writing the scan fails.
+     */
+    private static String convertScanToString(Scan scan) throws IOException {
+        ClientProtos.Scan proto = ProtobufUtil.toScan(scan);
+        return Base64.encodeBytes(proto.toByteArray());
+    }
+
     public void run() throws Exception {
         String tableName = "contacts";
 
         Configuration config = HBaseConfiguration.create();
-        Job job = new Job(config, "ExampleRead");
-        job.setJarByClass(JobSubmitter.class);
 
         Scan scan = new Scan();
         scan.setCaching(500);        // 1 is the default in Scan, which will be bad for MapReduce jobs
         scan.setCacheBlocks(false);  // don't set to true for MR jobs
 
-        TableMapReduceUtil.initTableMapperJob(
-                tableName,        // input HBase table name
-                scan,             // Scan instance to control CF and attribute selection
-                IndexMapper.class,   // mapper
-                null,             // mapper output key
-                null,             // mapper output value
-                job);
-        job.setOutputFormatClass(NullOutputFormat.class);   // because we aren't emitting anything from mapper
+        config.set(TableInputFormat.SCAN, convertScanToString(scan));
+        config.set(TableInputFormat.INPUT_TABLE, tableName);
+
+        Job job = new Job(config, "index builder");
+        job.setJarByClass(JobSubmitter.class);
+        job.setMapperClass(IndexMapper.class);
+        job.setNumReduceTasks(0);
+        job.setInputFormatClass(TableInputFormat.class);
+        job.setOutputFormatClass(MultiTableOutputFormat.class);
 
         boolean b = job.waitForCompletion(true);
         if (!b) {
