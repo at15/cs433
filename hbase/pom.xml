@@ -54,7 +54,7 @@
                                         implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>cn.edu.sjtu.stu.at15.hbase.Seeder</mainClass>
+                                    <mainClass>cn.edu.sjtu.stu.at15.hbase.JobSubmitter</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
