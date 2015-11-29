@@ -11,6 +11,7 @@
     <modules>
         <module>video</module>
         <module>text</module>
+        <module>hbase</module>
     </modules>
 
     <properties>
