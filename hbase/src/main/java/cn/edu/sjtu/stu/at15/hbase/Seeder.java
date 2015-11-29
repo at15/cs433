@@ -26,46 +26,18 @@ public class Seeder {
         Configuration conf = HBaseConfiguration.create();
         conf.set("hbase.master", "localhost:60000");
 
-//        // Instantiating HTable class
-//        HTable hTable = new HTable(conf, "emp");
-//
-//        Put put1 = new Put(Bytes.toBytes("row1"));
-//        put1.add(Bytes.toBytes("colfam1"), Bytes.toBytes("qual1"), Bytes.toBytes("val1"));
-//
-//        hTable.flushCommits();
-//
-//        Get get = new Get(Bytes.toBytes("row1"));
-//        Result result = hTable.get(get);
-//
-//        LOGGER.debug(result.toString());
-//        hTable.close();
-
         // Instantiating HTable class
         HTable hTable = new HTable(conf, "emp");
 
-        // Instantiating Put class
-        // accepts a row name.
-        Put p = new Put(Bytes.toBytes("row1"));
+        Put put1 = new Put(Bytes.toBytes("row1"));
+        put1.add(Bytes.toBytes("colfam1"), Bytes.toBytes("qual1"), Bytes.toBytes("val1"));
 
-        // adding values using add() method
-        // accepts column family name, qualifier/row name ,value
-        p.add(Bytes.toBytes("personal"),
-                Bytes.toBytes("name"),Bytes.toBytes("raju"));
+        hTable.flushCommits();
 
-        p.add(Bytes.toBytes("personal"),
-                Bytes.toBytes("city"),Bytes.toBytes("hyderabad"));
+        Get get = new Get(Bytes.toBytes("row1"));
+        Result result = hTable.get(get);
 
-        p.add(Bytes.toBytes("professional"),Bytes.toBytes("designation"),
-                Bytes.toBytes("manager"));
-
-        p.add(Bytes.toBytes("professional"),Bytes.toBytes("salary"),
-                Bytes.toBytes("50000"));
-
-        // Saving the put Instance to the HTable.
-        hTable.put(p);
-        System.out.println("data inserted");
-
-        // closing HTable
+        LOGGER.debug(result.toString());
         hTable.close();
     }
 }
