@@ -18,4 +18,13 @@ a interactive b+ tree http://www.cs.usfca.edu/~galles/visualization/BPlusTree.ht
 
 ### Problems
 
-- How to handle duplicate in key
+- Implement a B+ tree that support bulk loading and can be serialize & deserialize. 
+- How to handle duplicate in key? may just treat it as one key and store other information in value
+
+### Implementations
+
+- http://www.conquex.com/b-tree-javascript-implementation/
+- https://gist.github.com/mikelikesbikes/4742901
+- https://github.com/jankotek/mapdb/blob/master/src/main/java/org/mapdb/BTreeMap.java
+
+- http://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/BTree.java.html
