@@ -12,6 +12,7 @@
         <module>video</module>
         <module>text</module>
         <module>hbase</module>
+        <module>tree-index</module>
     </modules>
 
     <properties>
