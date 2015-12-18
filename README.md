@@ -11,4 +11,4 @@ sjtu cs433 distributed programming
 ## Projects
 
 - search engine for bbs see [forum-search](https://github.com/at15/forum-search)
-- tree-index for hdfs see [tree-index]
+- tree-index for hdfs see [tree-index](tree-index)

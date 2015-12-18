@@ -23,8 +23,35 @@ a interactive b+ tree http://www.cs.usfca.edu/~galles/visualization/BPlusTree.ht
 
 ### Implementations
 
+#### full
+
+- https://github.com/rweng/hdfs-indexer
+
+#### B+Tree
+
+- https://github.com/rweng/jb-tree used by rweng hdfs-indexer
 - http://www.conquex.com/b-tree-javascript-implementation/
 - https://gist.github.com/mikelikesbikes/4742901
 - https://github.com/jankotek/mapdb/blob/master/src/main/java/org/mapdb/BTreeMap.java
 
+#### BTree
+
 - http://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/BTree.java.html
+
+#### Blog
+
+- http://hackthology.com/lessons-learned-while-implementing-a-btree.html
+- http://jxlilin.blogspot.com/2013/11/b-tree-implementation-in-java.html
+
+#### Bulk loading
+
+- both bulk loading and duplicate keys http://web.cs.ucdavis.edu/~green/courses/ecs165b-s10/Lecture6.pdf 
+
+#### Duplicate key
+
+- http://hackthology.com/lessons-learned-while-implementing-a-btree.html
+
+#### Other related projects
+
+- https://github.com/Huawei-Hadoop/hindex
+- https://github.com/ykulbak/ihbase
