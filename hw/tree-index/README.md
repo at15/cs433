@@ -18,9 +18,14 @@ work well for ranged query, like age > 16
 - cache 
 
 Page 3-4
+
 - Ref2 Existing distributed B+ index, 1. not good at range query. 2. need to query other node http://www.vldb.org/pvldb/1/1453922.pdf
 - Ref17 a built-in block-based index structure on HDFS http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=5575646&tag=1
 - Architecture, data loader **sort and partition**, indexer, build index in parallel, meta table and client api
+
+Page 5
+
+- 
 
 ### Problems in the paper
 
