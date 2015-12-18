@@ -1,2 +1,3 @@
-ml-100k.zip
+*.zip
 ml-100k
+duplicate/*.data
