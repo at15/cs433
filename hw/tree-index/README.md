@@ -23,9 +23,9 @@ Page 3-4
 - Ref17 a built-in block-based index structure on HDFS http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=5575646&tag=1
 - Architecture, data loader **sort and partition**, indexer, build index in parallel, meta table and client api
 
-Page 5
+Page 5-6
 
-- 
+- Bulk loading to build B+ tree https://en.wikipedia.org/wiki/B%2B_tree
 
 ### Problems in the paper
 
