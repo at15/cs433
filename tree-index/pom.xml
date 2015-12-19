@@ -15,5 +15,12 @@
         A tree-like index for hadoop based on http://link.springer.com/chapter/10.1007/978-3-642-41230-1_28
     </description>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.mellowtech</groupId>
+            <artifactId>core</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+    </dependencies>
 
 </project>
