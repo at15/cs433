@@ -60,6 +60,17 @@ public class SortDriver {
 
         // http://stackoverflow.com/questions/25051671/totalorderpartitioner-ignores-partition-file-location
         TotalOrderPartitioner.setPartitionFile(job.getConfiguration(), partitionFile);
+        // NOTE: sampler sample based on input format, so when you use KeyValueTextInputFormat
+        // The sampler will treat key as text, and the partition will compare key using compare string method
+        // ie, 950 < 98 , 10 < 2, when compare as string
+        // So you MUST have your input format using the right Key type, ie, you want to partition based on a
+        // integer value, like user id. you need to have your input format has key type Integer
+        // so there are two way to do this
+        // 1. The easy way, use TextInputFormat, because its Key is LongWritable, so you use Long all the way instead
+        //    of Int, because the MapOutKeyClass MUST match the input source key class
+        // 2. The Doubi way, write a custom input Format like what I did, this not so bad, because it split using tab and
+        //    transform the first column to integer, but since you can also do it in mapper, it's really not a meaningful
+        //    thing
         InputSampler.writePartitionFile(job, new InputSampler.RandomSampler(
                 1, 10000));
 
