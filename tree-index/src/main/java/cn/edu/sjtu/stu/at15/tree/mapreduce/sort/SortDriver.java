@@ -40,12 +40,8 @@ public class SortDriver {
 
         job.setNumReduceTasks(numReducers);
 
-        // TODO: guess I need a mapper to handle the data..., yes
-//        job.setInputFormatClass(KeyValueTextInputFormat.class);
-//        job.setInputFormatClass(TextInputFormat.class);
         job.setInputFormatClass(IntegerKeyFileInputFormat.class);
 
-//        job.setMapperClass(SortMapper.class);
         job.setMapOutputKeyClass(IntWritable.class);
         job.setMapOutputValueClass(Text.class);
 

@@ -27,7 +27,9 @@ public class IntegerKeyRecordReader extends RecordReader<IntWritable, Text> {
 
     private Text innerValue;
 
+    // a hack to change the first word to a int
     private IntWritable key;
+    private Text tempKey;
 
     private Text value;
 
@@ -41,6 +43,7 @@ public class IntegerKeyRecordReader extends RecordReader<IntWritable, Text> {
         lineRecordReader = new LineRecordReader();
         String sepStr = conf.get(KEY_VALUE_SEPERATOR, "\t");
         this.separator = (byte) sepStr.charAt(0);
+        tempKey = new Text();
     }
 
     public void initialize(InputSplit genericSplit,
@@ -58,16 +61,15 @@ public class IntegerKeyRecordReader extends RecordReader<IntWritable, Text> {
         return -1;
     }
 
-    public static void setKeyValue(IntWritable key, Text value, byte[] line,
+    public void setKeyValue(IntWritable key, Text value, byte[] line,
                                    int lineLen, int pos) {
-        Text t = new Text();
         if (pos == -1) {
-            t.set(line, 0, lineLen);
-            key.set(Integer.parseInt(t.toString()));
+            tempKey.set(line, 0, lineLen);
+            key.set(Integer.parseInt(tempKey.toString()));
             value.set("");
         } else {
-            t.set(line, 0, pos);
-            key.set(Integer.parseInt(t.toString()));
+            tempKey.set(line, 0, pos);
+            key.set(Integer.parseInt(tempKey.toString()));
             value.set(line, pos + 1, lineLen - pos - 1);
         }
     }
