@@ -1,9 +1,9 @@
 package cn.edu.sjtu.stu.at15.tree.mapreduce.sort;
 
+import cn.edu.sjtu.stu.at15.tree.mapreduce.PathConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
 
 import org.apache.hadoop.conf.*;
 import org.apache.hadoop.fs.*;
@@ -24,10 +24,48 @@ public class SortDriver extends Configured implements Tool {
     public static final Logger LOGGER = LoggerFactory.getLogger(SortDriver.class);
 
     public int run(String[] args) throws Exception {
+        // configs
         int numReducers = 5;
-        Path input = new Path("/user/at15/tree-index/input");
-        Path partitionFile = new Path("/user/at15/tree-index/part.lst");
-        Path output = new Path("/user/at15/tree-index/output");
-        return 0;
+
+        Job job = Job.getInstance(getConf());
+        job.setJobName("sort");
+        job.setJarByClass(SortDriver.class);
+
+        // define the path
+        Path inputPath = new Path(PathConstant.PRE_SORT_OUTPUT);
+        Path partitionFilePath = new Path(PathConstant.SORT_PARTITION_FILE);
+        Path outputPath = new Path(PathConstant.SORT_OUTPUT);
+        // TODO: log the paths out
+
+        // define the mapper
+        // use the identity mapper, which is the default implementation
+        job.setMapOutputKeyClass(IntWritable.class);
+        job.setMapOutputValueClass(Text.class);
+        job.setInputFormatClass(SequenceFileInputFormat.class);
+        SequenceFileInputFormat.setInputPaths(job, inputPath);
+
+        // define the reducer
+        // use the identity reducer, which is the default, because we only need sort and partition
+        job.setNumReduceTasks(numReducers);
+        // use text for debug, use sequence is faster I guess
+        // TODO: but may still have to use sequence file
+        job.setOutputFormatClass(TextOutputFormat.class);
+        job.setOutputKeyClass(IntWritable.class);
+        job.setOutputValueClass(Text.class);
+        TextOutputFormat.setOutputPath(job, outputPath);
+
+        // set partition
+        job.setPartitionerClass(TotalOrderPartitioner.class);
+        TotalOrderPartitioner.setPartitionFile(job.getConfiguration(), partitionFilePath);
+
+        // set the sampler
+        InputSampler.writePartitionFile(job, new InputSampler.RandomSampler(
+                1, 10000));
+
+        // clean up the old output path
+        outputPath.getFileSystem(job.getConfiguration()).delete(outputPath, true);
+
+        // run the job and wait until it complete
+        return job.waitForCompletion(true) ? 0 : 1;
     }
 }

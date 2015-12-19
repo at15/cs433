@@ -50,7 +50,7 @@ public class PreSortDriver extends Configured implements Tool {
         SequenceFileOutputFormat.setOutputPath(job, mapOutputPath);
 
         // clean up the output folder
-        mapOutputPath.getFileSystem(getConf()).delete(mapOutputPath, true);
+        mapOutputPath.getFileSystem(job.getConfiguration()).delete(mapOutputPath, true);
 
         // run the job and wait until it complete
         return job.waitForCompletion(true) ? 0 : 1;
