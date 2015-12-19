@@ -14,7 +14,7 @@ https://en.wikipedia.org/wiki/B%2B_tree
 > A B+ tree can be viewed as a B-tree in which each node contains only keys (not key-value pairs), 
 and to which an additional level is added at the bottom with linked leaves.
 
-a interactive b+ tree http://www.cs.usfca.edu/~galles/visualization/BPlusTree.html
+**a interactive b+ tree http://www.cs.usfca.edu/~galles/visualization/BPlusTree.html**
 
 ### Problems
 
