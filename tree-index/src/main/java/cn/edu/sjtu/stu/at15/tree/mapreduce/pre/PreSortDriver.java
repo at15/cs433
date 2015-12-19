@@ -30,7 +30,8 @@ public class PreSortDriver extends Configured implements Tool {
         Path mapOutputPath = new Path(PathConstant.PRE_SORT_OUTPUT);
 
         // define the mapper
-        // TODO: set which column to use
+        // TODO: get the column from config
+        job.getConfiguration().set(PreSortMapper.COLUMN_INDEX_CONFIG_NAME, "1"); // use the second column
         job.setMapperClass(PreSortMapper.class);
         job.setInputFormatClass(TextInputFormat.class);
         TextInputFormat.setInputPaths(job, mapInputPath);
