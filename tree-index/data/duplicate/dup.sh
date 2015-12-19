@@ -7,9 +7,9 @@ cp o.data u.data
 
 echo "duplicate data for 1000 times"
 #for i in `seq 1 1000`;
-for i in `seq 1 10`;
-do
-    cat t.data >> u.data
-done
+#for i in `seq 1 10`;
+#do
+#    cat t.data >> u.data
+#done
 
 du -sh *
