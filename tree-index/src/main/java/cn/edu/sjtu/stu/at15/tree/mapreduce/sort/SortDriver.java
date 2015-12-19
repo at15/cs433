@@ -45,7 +45,7 @@ public class SortDriver {
 //        job.setInputFormatClass(TextInputFormat.class);
         job.setInputFormatClass(IntegerKeyFileInputFormat.class);
 
-        job.setMapperClass(SortMapper.class);
+//        job.setMapperClass(SortMapper.class);
         job.setMapOutputKeyClass(IntWritable.class);
         job.setMapOutputValueClass(Text.class);
 
