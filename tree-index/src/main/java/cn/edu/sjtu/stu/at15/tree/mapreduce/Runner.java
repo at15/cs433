@@ -20,6 +20,10 @@ public class Runner {
             int exitCode = ToolRunner.run(new SortDriver(), args);
             System.exit(exitCode);
         }
+        if(args[0].equals("index")){
+            int exitCode = ToolRunner.run(new SortDriver(), args);
+            System.exit(exitCode);
+        }
         System.out.println("unsupported job " + args[0]);
     }
 }

@@ -12,7 +12,6 @@ import org.apache.hadoop.mapreduce.*;
 import org.apache.hadoop.mapreduce.lib.input.*;
 import org.apache.hadoop.mapreduce.lib.output.*;
 import org.apache.hadoop.mapreduce.lib.partition.*;
-import org.apache.hadoop.mapreduce.lib.reduce.*;
 import org.apache.hadoop.util.*;
 
 /**
