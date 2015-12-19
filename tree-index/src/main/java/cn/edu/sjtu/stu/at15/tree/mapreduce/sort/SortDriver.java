@@ -31,7 +31,7 @@ public class SortDriver {
 
     public void run() throws Exception {
 
-        int numReducers = 2;
+        int numReducers = 5;
         Path input = new Path("/user/at15/tree-index/input");
         Path partitionFile = new Path("/user/at15/tree-index/part.lst");
         Path output = new Path("/user/at15/tree-index/output");
@@ -52,7 +52,8 @@ public class SortDriver {
         FileInputFormat.setInputPaths(job, input);
         FileOutputFormat.setOutputPath(job, output);
 
-        TotalOrderPartitioner.setPartitionFile(conf, partitionFile);
+        // http://stackoverflow.com/questions/25051671/totalorderpartitioner-ignores-partition-file-location
+        TotalOrderPartitioner.setPartitionFile(job.getConfiguration(), partitionFile);
         InputSampler.writePartitionFile(job, new InputSampler.RandomSampler(
                 1, 10000));
 
