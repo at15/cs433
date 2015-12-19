@@ -1,6 +1,7 @@
 package cn.edu.sjtu.stu.at15.tree.mapreduce;
 
 import cn.edu.sjtu.stu.at15.tree.mapreduce.pre.PreSortDriver;
+import cn.edu.sjtu.stu.at15.tree.mapreduce.sort.SortDriver;
 import org.apache.hadoop.util.ToolRunner;
 
 /**
@@ -13,6 +14,10 @@ public class Runner {
         }
         if (args[0].equals("pre-sort")) {
             int exitCode = ToolRunner.run(new PreSortDriver(), args);
+            System.exit(exitCode);
+        }
+        if(args[0].equals("sort")){
+            int exitCode = ToolRunner.run(new SortDriver(), args);
             System.exit(exitCode);
         }
         System.out.println("unsupported job " + args[0]);

@@ -3,18 +3,20 @@ package cn.edu.sjtu.stu.at15.tree.mapreduce.pre;
 import cn.edu.sjtu.stu.at15.tree.mapreduce.PathConstant;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.util.Tool;
-import org.apache.hadoop.util.ToolRunner;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapreduce.*;
 import org.apache.hadoop.mapreduce.lib.input.*;
 import org.apache.hadoop.mapreduce.lib.output.*;
-import org.apache.hadoop.mapreduce.lib.partition.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by at15 on 15-12-19.
  */
 public class PreSortDriver extends Configured implements Tool {
+    public static final Logger LOGGER = LoggerFactory.getLogger(PreSortDriver.class);
+
     // input, table column text separated by tab
     // output,<int,string> use specific column value as key, line as value
     // the key is cast into IntWritable, and use the first column by default
@@ -28,6 +30,8 @@ public class PreSortDriver extends Configured implements Tool {
         // define the path
         Path mapInputPath = new Path(PathConstant.PRE_SORT_INPUT);
         Path mapOutputPath = new Path(PathConstant.PRE_SORT_OUTPUT);
+        LOGGER.info("use " + mapInputPath.toString() + " as input ");
+        LOGGER.info("use " + mapOutputPath.toString() + " as output ");
 
         // define the mapper
         // TODO: get the column from config
