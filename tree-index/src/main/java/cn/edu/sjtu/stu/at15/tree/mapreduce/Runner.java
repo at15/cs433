@@ -1,5 +1,6 @@
 package cn.edu.sjtu.stu.at15.tree.mapreduce;
 
+import cn.edu.sjtu.stu.at15.tree.mapreduce.index.IndexDriver;
 import cn.edu.sjtu.stu.at15.tree.mapreduce.pre.PreSortDriver;
 import cn.edu.sjtu.stu.at15.tree.mapreduce.sort.SortDriver;
 import org.apache.hadoop.util.ToolRunner;
@@ -21,7 +22,7 @@ public class Runner {
             System.exit(exitCode);
         }
         if(args[0].equals("index")){
-            int exitCode = ToolRunner.run(new SortDriver(), args);
+            int exitCode = ToolRunner.run(new IndexDriver(), args);
             System.exit(exitCode);
         }
         System.out.println("unsupported job " + args[0]);
