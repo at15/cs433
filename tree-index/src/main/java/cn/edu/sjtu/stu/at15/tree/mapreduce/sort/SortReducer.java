@@ -21,10 +21,17 @@ public class SortReducer extends
     private static final Logger LOGGER = LoggerFactory.getLogger(SortReducer.class);
     private Integer minKey;
     private Integer maxKey;
+//    private MultipleOutputs<IntWritable, Text> mos;
+
+//    public void setup(Context context) {
+//        mos = new MultipleOutputs<IntWritable, Text>(context);
+//    }
 
     public void cleanup(Context context) throws IOException, InterruptedException {
         LOGGER.info("min key " + minKey);
         LOGGER.info("max key " + maxKey);
+        LOGGER.info("partition id is " + context.getTaskAttemptID().getTaskID().getId());
+//        mos.write("term", keyVal, val, termIndexFileName);
     }
 
     public void reduce(IntWritable key, Iterable<Text> values,

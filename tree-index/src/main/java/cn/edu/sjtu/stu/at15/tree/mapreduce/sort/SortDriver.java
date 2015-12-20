@@ -49,7 +49,6 @@ public class SortDriver extends Configured implements Tool {
         job.setReducerClass(SortReducer.class);
         job.setNumReduceTasks(numReducers);
         // use text for debug, use sequence is faster I guess
-        // TODO: but may still have to use sequence file
         job.setOutputFormatClass(TextOutputFormat.class);
         job.setOutputKeyClass(IntWritable.class);
         job.setOutputValueClass(Text.class);
@@ -62,6 +61,10 @@ public class SortDriver extends Configured implements Tool {
         // set the sampler
         InputSampler.writePartitionFile(job, new InputSampler.RandomSampler(
                 1, 10000));
+
+//        // set multiple output
+//        MultipleOutputs.addNamedOutput(job, "meta", TextOutputFormat.class,
+//                Text.class, Text.class);
 
         // clean up the old output path
         outputPath.getFileSystem(job.getConfiguration()).delete(outputPath, true);
