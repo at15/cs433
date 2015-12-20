@@ -3,6 +3,8 @@ package cn.edu.sjtu.stu.at15.tree.mapreduce.index;
 import org.mellowtech.core.bytestorable.CBInt;
 import org.mellowtech.core.bytestorable.CBString;
 import org.mellowtech.core.collections.KeyValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.util.Iterator;
  * Created by at15 on 15-12-20.
  */
 public class SortedFileIterator implements Iterator<KeyValue<CBInt, CBString>> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SortedFileIterator.class);
     private BufferedReader br;
     private String cachedLine;
     private Boolean end;
@@ -22,6 +25,7 @@ public class SortedFileIterator implements Iterator<KeyValue<CBInt, CBString>> {
     }
 
     public boolean hasNext() {
+//        LOGGER.info("call has next");, has next is called, but why the tree is empty?
         if (end) {
             return false;
         }
@@ -58,7 +62,10 @@ public class SortedFileIterator implements Iterator<KeyValue<CBInt, CBString>> {
         }
         // parse the line and return value
         String[] splits = line.split("\\t");
-        return new KeyValue<CBInt, CBString>(new CBInt(Integer.valueOf(splits[0])),
+//        LOGGER.info(line); // line is also working
+        Integer key = Integer.valueOf(splits[0]);
+//        LOGGER.info("key is " + key);
+        return new KeyValue<CBInt, CBString>(new CBInt(key),
                 new CBString(line));
     }
 

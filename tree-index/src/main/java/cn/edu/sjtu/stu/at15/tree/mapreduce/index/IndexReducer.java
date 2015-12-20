@@ -13,6 +13,8 @@ import org.mellowtech.core.bytestorable.CBInt;
 import org.mellowtech.core.bytestorable.CBString;
 import org.mellowtech.core.collections.tree.BTree;
 import org.mellowtech.core.collections.tree.BTreeBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,6 +26,8 @@ import java.io.InputStreamReader;
  */
 public class IndexReducer extends
         Reducer<Text, Text, Text, Text> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(IndexReducer.class);
+
     public void reduce(Text key, Iterable<Text> values,
                        Context context
     ) throws IOException, InterruptedException {
@@ -32,6 +36,7 @@ public class IndexReducer extends
         // TODO: check if dir is created
         localIndexFolder.mkdir();
 
+        LOGGER.info("start reading file " + key.toString());
         Path partitionPath = new Path("hdfs://" + key.toString());
         FileSystem fs = FileSystem.get(context.getConfiguration());
         BufferedReader br = new BufferedReader(new InputStreamReader(fs.open(partitionPath)));
@@ -41,7 +46,9 @@ public class IndexReducer extends
         BTree bt = new BTreeBuilder().valuesInMemory(true)
                 .build(new CBInt(), new CBString(), indexFileName);
         bt.createIndex(iterator);
+        LOGGER.info("get key 427 " + bt.get(new CBInt(427)));
         bt.save();
+        bt.close();
 
         // TODO: write meta data as well, the mapper may need more data
         context.write(key, new Text(indexFileName));
