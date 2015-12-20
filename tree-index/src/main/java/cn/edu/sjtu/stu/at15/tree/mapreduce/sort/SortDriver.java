@@ -45,6 +45,8 @@ public class SortDriver extends Configured implements Tool {
 
         // define the reducer
         // use the identity reducer, which is the default, because we only need sort and partition
+        // WORKING: use reducer to generate meta data
+        job.setReducerClass(SortReducer.class);
         job.setNumReduceTasks(numReducers);
         // use text for debug, use sequence is faster I guess
         // TODO: but may still have to use sequence file
