@@ -13,6 +13,7 @@
         <module>text</module>
         <module>hbase</module>
         <module>tree-index</module>
+        <module>query</module>
     </modules>
 
     <properties>
