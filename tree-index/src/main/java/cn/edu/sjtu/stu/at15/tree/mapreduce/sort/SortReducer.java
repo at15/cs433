@@ -44,7 +44,7 @@ public class SortReducer extends
         meta.setStart(minKey);
         meta.setEnd(maxKey);
         meta.setCount(count);
-        mos.write("meta", new IntWritable(meta.getPartitionId()), new Text(meta.toString()),
+        mos.write("meta", new IntWritable(meta.getPartitionId()), new Text(meta.withOutPartitionId()),
                 metaFileName);
         mos.close();
     }

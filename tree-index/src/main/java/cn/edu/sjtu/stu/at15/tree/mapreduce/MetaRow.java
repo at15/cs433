@@ -11,11 +11,15 @@ public class MetaRow {
     private Integer end;
     private Long count;
 
+
+    private String indexPath;
+
     public MetaRow() {
         partitionId = null;
         start = null;
         end = null;
         count = null;
+        indexPath = null;
     }
 
     public MetaRow(String line) {
@@ -26,10 +30,17 @@ public class MetaRow {
         if (columns.length > 3) {
             count = Long.parseLong(columns[3]);
         }
+        if (columns.length > 4) {
+            indexPath = columns[4];
+        }
     }
 
     public Integer getPartitionId() {
         return partitionId;
+    }
+
+    public String getPartitionIdAsString() {
+        return String.valueOf(partitionId);
     }
 
     public void setPartitionId(Integer partitionId) {
@@ -60,13 +71,28 @@ public class MetaRow {
         this.count = count;
     }
 
+    public String getIndexPath() {
+        return indexPath;
+    }
+
+    public void setIndexPath(String indexPath) {
+        this.indexPath = indexPath;
+    }
+
+    public String withOutPartitionId() {
+        String s = start + "\t" + end;
+        if (count != null) {
+            s = s + "\t" + count;
+        }
+        if (indexPath != null) {
+            s = s + "\t" + indexPath;
+        }
+        return s;
+    }
+
     @Override
     public String toString() {
         // TODO: check if partition is null
-        String s = partitionId + "\t" + start + "\t" + end;
-        if (count != null) {
-            return s + "\t" + count;
-        }
-        return s;
+        return partitionId + "\t" + withOutPartitionId();
     }
 }

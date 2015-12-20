@@ -1,5 +1,6 @@
 package cn.edu.sjtu.stu.at15.tree.mapreduce.index;
 
+import cn.edu.sjtu.stu.at15.tree.mapreduce.MetaRow;
 import cn.edu.sjtu.stu.at15.tree.mapreduce.PathConstant;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.hadoop.fs.FileSystem;
@@ -43,24 +44,32 @@ public class IndexReducer extends
         String indexFileName = new String(Base64.encodeBase64(key.getBytes()));
         String indexFilePathPrefix = PathConstant.LOCAL_INDEX_FOLDER + "/" + indexFileName;
         String indexFilePath = PathConstant.LOCAL_INDEX_FOLDER + "/" + indexFileName + ".idx";
+
+        LOGGER.info("start building index");
         BTree bt = new BTreeBuilder().valuesInMemory(true)
                 .build(new CBInt(), new CBString(), indexFilePathPrefix);
         bt.createIndex(iterator);
         bt.save();
         bt.close();
-        // TODO: write meta data as well, the mapper may need more data
-        // TODO: have a meta class
+        LOGGER.info("index building finished");
+
+
         LOGGER.info("uploading index file to HDFS");
         // TODO: should have .val file, why I only got .idx file
         Path idxFile = new Path(indexFilePath);
-        Path idxFileHDFS = new Path(PathConstant.REMOTE_INDEX_FOLDER + "/" + indexFileName + ".idx");
-        // TODO: will existing dir cause trouble? yes
-        // fs.create(new Path(PathConstant.REMOTE_INDEX_FOLDER));
-        // delete local file and upload to HDFS
+        String indexFileRemotePath = PathConstant.REMOTE_INDEX_FOLDER + "/" + indexFileName + ".idx";
+        Path idxFileHDFS = new Path(indexFileRemotePath);
+        // NOTE: MUST create folder before this step
         fs.copyFromLocalFile(true, true, idxFile, idxFileHDFS);
         LOGGER.info("upload completed");
 
-        context.write(key, new Text(indexFileName));
+        // TODO: write meta data as well, the mapper may need more data
+        // The values should only have one value, which is the meta row
+        Text value = values.iterator().next();
+        MetaRow meta = new MetaRow(value.toString());
+        meta.setIndexPath(indexFileRemotePath);
+
+        context.write(new Text(meta.getPartitionIdAsString()), new Text(meta.withOutPartitionId()));
 
     }
 }
