@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
  * Created by at15 on 15-12-20.
  */
 public class MetaDriver extends Configured implements Tool {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MetaDriver.class);
+
     public int run(String[] args) throws Exception {
         Job job = Job.getInstance(getConf());
         job.setJobName("meta");

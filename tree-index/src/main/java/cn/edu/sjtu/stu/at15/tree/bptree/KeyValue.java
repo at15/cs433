@@ -13,7 +13,7 @@ public class KeyValue<K extends Comparable, V> {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "k: " + key + " v: " + value;
     }
 }

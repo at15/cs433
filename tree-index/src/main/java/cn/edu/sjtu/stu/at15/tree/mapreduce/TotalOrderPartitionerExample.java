@@ -26,7 +26,7 @@ public class TotalOrderPartitionerExample {
             System.exit(exitCode);
         }
 
-        @SuppressWarnings({ "unchecked", "rawtypes" })
+        @SuppressWarnings({"unchecked", "rawtypes"})
         public int run(String[] args) throws Exception {
             // Check arguments.
             if (args.length != 2) {
@@ -70,7 +70,9 @@ public class TotalOrderPartitionerExample {
 
             // Submit the map-only job.
             int exitCode = mapJob.waitForCompletion(true) ? 0 : 1;
-            if (exitCode != 0) { return exitCode; }
+            if (exitCode != 0) {
+                return exitCode;
+            }
 
             // Set up the second job, the reduce-only.
             Job reduceJob = new Job(getConf());
@@ -113,7 +115,9 @@ public class TotalOrderPartitionerExample {
                 throws IOException, InterruptedException {
             String line = value.toString();
             for (String word : line.split("\\W+")) {
-                if (word.length() == 0) { continue; }
+                if (word.length() == 0) {
+                    continue;
+                }
                 context.write(new Text(word), new IntWritable(1));
             }
         }
