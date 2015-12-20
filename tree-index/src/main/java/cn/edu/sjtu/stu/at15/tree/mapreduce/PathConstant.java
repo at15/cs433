@@ -11,4 +11,5 @@ public class PathConstant {
     public static final String SORT_PARTITION_FILE = "/user/at15/tree-index/part.lst";
     public static final String SORTED_FILE_LIST = "/user/at15/tree-index/sorted.list";
     public static final String INDEX_OUTPUT = "/user/at15/tree-index/out-index";
+    public static final String META_OUTPUT = "/user/at15/tree-index/out-meta";
 }
