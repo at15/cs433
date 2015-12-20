@@ -1,5 +1,6 @@
 package cn.edu.sjtu.stu.at15.query;
 
+import cn.edu.sjtu.stu.at15.query.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,7 +10,7 @@ import org.slf4j.LoggerFactory;
 public class Server {
     private static final Logger LOGGER = LoggerFactory.getLogger(Server.class);
 
-    public void main(String[] args) throws Exception {
-
+    public static void main(String[] args) throws Exception {
+        LOGGER.debug("local file exist? " + FileUtil.localFileExists(".gitignore2"));
     }
 }
