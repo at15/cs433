@@ -20,15 +20,17 @@ public class SortReducer extends
     private static final Logger LOGGER = LoggerFactory.getLogger(SortReducer.class);
     private Integer minKey;
     private Integer maxKey;
+    private Long count;
     private MultipleOutputs<IntWritable, Text> mos;
 
     public void setup(Context context) {
+        count = 0L;
         mos = new MultipleOutputs<IntWritable, Text>(context);
     }
 
 
     // meta is
-    // partitionId  start   end
+    // partitionId | start | end | count
     public void cleanup(Context context) throws IOException, InterruptedException {
         LOGGER.info("min key " + minKey);
         LOGGER.info("max key " + maxKey);
@@ -36,13 +38,15 @@ public class SortReducer extends
         LOGGER.info("partition id is " + partitionId);
         // FIXME: should use path from config instead of using constant
         String metaFileName = PathConstant.SORT_META_OUTPUT + "/" + partitionId;
-        mos.write("meta", new IntWritable(partitionId), new Text(minKey + "\t" + maxKey), metaFileName);
+        mos.write("meta", new IntWritable(partitionId), new Text(minKey + "\t" + maxKey + "\t" + count),
+                metaFileName);
         mos.close();
     }
 
     public void reduce(IntWritable key, Iterable<Text> values,
                        Context context
     ) throws IOException, InterruptedException {
+        count++;
         if (minKey == null || minKey > key.get()) {
             minKey = key.get();
         }
