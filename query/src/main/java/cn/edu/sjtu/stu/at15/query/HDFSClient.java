@@ -1,10 +1,8 @@
 package cn.edu.sjtu.stu.at15.query;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,14 +12,13 @@ import java.net.URISyntaxException;
 
 /**
  * Created by at15 on 15-12-20.
- * <p/>
- * download file from hdfs
  */
-public class HDFS {
+public class HDFSClient {
+    public static final Logger LOGGER = LoggerFactory.getLogger(HDFSClient.class);
     protected Configuration conf;
     protected FileSystem hdfs;
 
-    public HDFS() throws IOException {
+    public HDFSClient() throws IOException {
         conf = new Configuration();
         try {
             hdfs = FileSystem.get(new URI("hdfs://localhost:9000"), conf);
@@ -39,7 +36,8 @@ public class HDFS {
     }
 
     public void copyToLocal(String remote, String local) throws IOException {
+        LOGGER.info("start copy " + remote + " to " + local);
         hdfs.copyToLocalFile(false, new Path(remote), new Path(local));
+        LOGGER.info("end copy " + remote + " to " + local);
     }
-
 }
