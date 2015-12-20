@@ -1,6 +1,7 @@
 package cn.edu.sjtu.stu.at15.query;
 
 import cn.edu.sjtu.stu.at15.query.util.FileUtil;
+import org.apache.hadoop.fs.Path;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +12,9 @@ public class Server {
     private static final Logger LOGGER = LoggerFactory.getLogger(Server.class);
 
     public static void main(String[] args) throws Exception {
-        LOGGER.debug("local file exist? " + FileUtil.localFileExists(".gitignore2"));
+//        LOGGER.debug("local file exist? " + FileUtil.localFileExists(".gitignore2"));
+        HDFS hdfs = new HDFS();
+        hdfs.copyToLocal("/user/at15/tree-index/out-meta/part-r-00000","meta.txt");
+
     }
 }
