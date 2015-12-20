@@ -1,7 +1,6 @@
 package cn.edu.sjtu.stu.at15.tree.mapreduce.sort;
 
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
+import cn.edu.sjtu.stu.at15.tree.mapreduce.PathConstant;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -22,7 +21,6 @@ public class SortReducer extends
     private Integer minKey;
     private Integer maxKey;
     private MultipleOutputs<IntWritable, Text> mos;
-    private final IntWritable one = new IntWritable(1);
 
     public void setup(Context context) {
         mos = new MultipleOutputs<IntWritable, Text>(context);
@@ -31,9 +29,11 @@ public class SortReducer extends
     public void cleanup(Context context) throws IOException, InterruptedException {
         LOGGER.info("min key " + minKey);
         LOGGER.info("max key " + maxKey);
-        LOGGER.info("partition id is " + context.getTaskAttemptID().getTaskID().getId());
-        String metaFileName = "/tmp/meta-" + context.getTaskAttemptID().getTaskID().getId();
-        mos.write("meta", one, new Text(minKey + "\t" + maxKey), metaFileName);
+        Integer partitionId = context.getTaskAttemptID().getTaskID().getId();
+        LOGGER.info("partition id is " + partitionId);
+        // FIXME: should use path from config instead of using constant
+        String metaFileName = PathConstant.SORT_META_OUTPUT + "/" + partitionId;
+        mos.write("meta", new IntWritable(partitionId), new Text(minKey + "\t" + maxKey), metaFileName);
         mos.close();
     }
 

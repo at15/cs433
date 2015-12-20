@@ -34,6 +34,7 @@ public class SortDriver extends Configured implements Tool {
         Path inputPath = new Path(PathConstant.PRE_SORT_OUTPUT);
         Path partitionFilePath = new Path(PathConstant.SORT_PARTITION_FILE);
         Path outputPath = new Path(PathConstant.SORT_OUTPUT);
+        Path metaPath = new Path(PathConstant.SORT_META_OUTPUT);
         // TODO: log the paths out
 
         // define the mapper
@@ -68,6 +69,7 @@ public class SortDriver extends Configured implements Tool {
 
         // clean up the old output path
         outputPath.getFileSystem(job.getConfiguration()).delete(outputPath, true);
+        metaPath.getFileSystem(job.getConfiguration()).delete(metaPath, true);
 
         // run the job and wait until it complete
         return job.waitForCompletion(true) ? 0 : 1;
