@@ -40,13 +40,24 @@ public class IndexReducer extends
         BufferedReader br = new BufferedReader(new InputStreamReader(fs.open(partitionPath)));
         SortedFileIterator iterator = new SortedFileIterator(br);
 
-        String indexFileName = PathConstant.LOCAL_INDEX_FOLDER + "/" + new String(Base64.encodeBase64(key.getBytes()));
+        String indexFileName = new String(Base64.encodeBase64(key.getBytes()));
+        String indexFilePathPrefix = PathConstant.LOCAL_INDEX_FOLDER + "/" + indexFileName;
+        String indexFilePath = PathConstant.LOCAL_INDEX_FOLDER + "/" + indexFileName + ".idx";
         BTree bt = new BTreeBuilder().valuesInMemory(true)
-                .build(new CBInt(), new CBString(), indexFileName);
+                .build(new CBInt(), new CBString(), indexFilePathPrefix);
         bt.createIndex(iterator);
         bt.save();
         bt.close();
         // TODO: write meta data as well, the mapper may need more data
+        // TODO: have a meta class
+        LOGGER.info("uploading index file to HDFS");
+        // TODO: should have .val file, why I only got .idx file
+        Path idxFile = new Path(indexFilePath);
+        Path idxFileHDFS = new Path("/tmp/" + indexFileName + ".idx");
+//        Path idxFileHDFS = new Path("hdfs:///tmp/" + indexFileName); // ? need hdfs
+        fs.copyFromLocalFile(false, true, idxFile, idxFileHDFS);
+        LOGGER.info("upload completed");
+
         context.write(key, new Text(indexFileName));
 
     }
