@@ -17,7 +17,7 @@ public class DummyTree<K extends Comparable, V> extends BPlusTree<K, V> {
     private K minKey;
     private K maxKey;
 
-    public DummyTree(){
+    public DummyTree() {
         size = 0L;
     }
 
@@ -26,24 +26,24 @@ public class DummyTree<K extends Comparable, V> extends BPlusTree<K, V> {
         return null;
     }
 
-    public Long size(){
+    public Long size() {
         return size;
     }
 
-    public K getMinKey(){
+    public K getMinKey() {
         return minKey;
     }
 
-    public K getMaxKey(){
+    public K getMaxKey() {
         return maxKey;
     }
 
     // bulk loading
     public void bulkLoading(Iterator<KeyValue<K, V>> sorted) {
         // FIXME: use tree map to store
-        KeyValue<K,V> kv =sorted.next();
+        KeyValue<K, V> kv = sorted.next();
         minKey = kv.key;
-        while (kv != null){
+        while (kv != null) {
             maxKey = kv.key;
             // should insert it ... the bulk loading logic here
             // bulk insert or sth...
@@ -51,7 +51,7 @@ public class DummyTree<K extends Comparable, V> extends BPlusTree<K, V> {
         }
     }
 
-    public boolean save(){
+    public boolean save() {
         return true;
     }
 }
