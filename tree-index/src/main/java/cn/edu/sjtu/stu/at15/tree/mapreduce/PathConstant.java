@@ -12,4 +12,5 @@ public class PathConstant {
     public static final String SORT_META_OUTPUT = "/user/at15/tree-index/out-sort-meta";
     public static final String INDEX_OUTPUT = "/user/at15/tree-index/out-index";
     public static final String META_OUTPUT = "/user/at15/tree-index/out-meta";
+    public static final String LOCAL_INDEX_FOLDER = "/tmp/tree-index";
 }
