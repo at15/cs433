@@ -9,6 +9,11 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
+import org.mellowtech.core.bytestorable.CBInt;
+import org.mellowtech.core.bytestorable.CBString;
+import org.mellowtech.core.collections.tree.BTree;
+import org.mellowtech.core.collections.tree.BTreeBuilder;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -30,17 +35,16 @@ public class IndexReducer extends
         Path partitionPath = new Path("hdfs://" + key.toString());
         FileSystem fs = FileSystem.get(context.getConfiguration());
         BufferedReader br = new BufferedReader(new InputStreamReader(fs.open(partitionPath)));
+        SortedFileIterator iterator = new SortedFileIterator(br);
 
         String indexFileName = PathConstant.LOCAL_INDEX_FOLDER + "/" + new String(Base64.encodeBase64(key.getBytes()));
+        BTree bt = new BTreeBuilder().valuesInMemory(true)
+                .build(new CBInt(), new CBString(), indexFileName);
+        bt.createIndex(iterator);
+        bt.save();
 
-
-        BPlusTree<Integer, String> bPlusTree = new DummyTree<Integer, String>();
-        bPlusTree.bulkLoading(new PartitionFileIterator(br));
-        bPlusTree.save();
-        context.write(key, new Text(bPlusTree.getMinKey() +
-                "\t" + bPlusTree.getMaxKey() +
-                "\t" + bPlusTree.size() +
-                "\t" + indexFileName));
+        // TODO: write meta data as well, the mapper may need more data
+        context.write(key, new Text(indexFileName));
 
     }
 }

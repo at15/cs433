@@ -1,6 +1,8 @@
 package cn.edu.sjtu.stu.at15.tree.mapreduce.index;
 
-import cn.edu.sjtu.stu.at15.tree.bptree.KeyValue;
+import org.mellowtech.core.bytestorable.CBInt;
+import org.mellowtech.core.bytestorable.CBString;
+import org.mellowtech.core.collections.KeyValue;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,12 +11,12 @@ import java.util.Iterator;
 /**
  * Created by at15 on 15-12-20.
  */
-public class PartitionFileIterator implements Iterator<KeyValue<Integer, String>> {
+public class SortedFileIterator implements Iterator<KeyValue<CBInt, CBString>> {
     private BufferedReader br;
     private String cachedLine;
     private Boolean end;
 
-    public PartitionFileIterator(BufferedReader br) {
+    public SortedFileIterator(BufferedReader br) {
         this.br = br;
         this.end = false;
     }
@@ -36,7 +38,7 @@ public class PartitionFileIterator implements Iterator<KeyValue<Integer, String>
         }
     }
 
-    public KeyValue<Integer, String> next() {
+    public KeyValue<CBInt, CBString> next() {
         // TODO: how to handle no more next?
         String line;
         if (cachedLine != null) {
@@ -56,7 +58,8 @@ public class PartitionFileIterator implements Iterator<KeyValue<Integer, String>
         }
         // parse the line and return value
         String[] splits = line.split("\\t");
-        return new KeyValue<Integer, String>(Integer.valueOf(splits[0]), line);
+        return new KeyValue<CBInt, CBString>(new CBInt(Integer.valueOf(splits[0])),
+                new CBString(line));
     }
 
     public void remove() {
