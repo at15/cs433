@@ -8,5 +8,4 @@ hdfs dfs -mkdir /user
 hdfs dfs -mkdir /user/at15
 hdfs dfs -mkdir /user/at15/tree-index
 hdfs dfs -mkdir /user/at15/tree-index/input
-# TODO: don't know if partition require create folder
-hdfs dfs -mkdir /user/at15/tree-index/part
+hdfs dfs -mkdir /user/at15/tree-index/built-index

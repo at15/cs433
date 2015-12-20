@@ -53,8 +53,11 @@ public class IndexReducer extends
         LOGGER.info("uploading index file to HDFS");
         // TODO: should have .val file, why I only got .idx file
         Path idxFile = new Path(indexFilePath);
-        Path idxFileHDFS = new Path("/tmp/" + indexFileName + ".idx");
-        fs.copyFromLocalFile(false, true, idxFile, idxFileHDFS);
+        Path idxFileHDFS = new Path(PathConstant.REMOTE_INDEX_FOLDER + "/" + indexFileName + ".idx");
+        // TODO: will existing dir cause trouble? yes
+        // fs.create(new Path(PathConstant.REMOTE_INDEX_FOLDER));
+        // delete local file and upload to HDFS
+        fs.copyFromLocalFile(true, true, idxFile, idxFileHDFS);
         LOGGER.info("upload completed");
 
         context.write(key, new Text(indexFileName));
