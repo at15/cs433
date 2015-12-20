@@ -54,7 +54,6 @@ public class IndexReducer extends
         // TODO: should have .val file, why I only got .idx file
         Path idxFile = new Path(indexFilePath);
         Path idxFileHDFS = new Path("/tmp/" + indexFileName + ".idx");
-//        Path idxFileHDFS = new Path("hdfs:///tmp/" + indexFileName); // ? need hdfs
         fs.copyFromLocalFile(false, true, idxFile, idxFileHDFS);
         LOGGER.info("upload completed");
 

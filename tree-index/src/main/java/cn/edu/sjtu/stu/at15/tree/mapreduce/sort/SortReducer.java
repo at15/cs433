@@ -1,5 +1,6 @@
 package cn.edu.sjtu.stu.at15.tree.mapreduce.sort;
 
+import cn.edu.sjtu.stu.at15.tree.mapreduce.MetaRow;
 import cn.edu.sjtu.stu.at15.tree.mapreduce.PathConstant;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
@@ -32,13 +33,18 @@ public class SortReducer extends
     // meta is
     // partitionId | start | end | count
     public void cleanup(Context context) throws IOException, InterruptedException {
+        Integer partitionId = context.getTaskAttemptID().getTaskID().getId();
         LOGGER.info("min key " + minKey);
         LOGGER.info("max key " + maxKey);
-        Integer partitionId = context.getTaskAttemptID().getTaskID().getId();
         LOGGER.info("partition id is " + partitionId);
         // FIXME: should use path from config instead of using constant
         String metaFileName = PathConstant.SORT_META_OUTPUT + "/" + partitionId;
-        mos.write("meta", new IntWritable(partitionId), new Text(minKey + "\t" + maxKey + "\t" + count),
+        MetaRow meta = new MetaRow();
+        meta.setPartitionId(partitionId);
+        meta.setStart(minKey);
+        meta.setEnd(maxKey);
+        meta.setCount(count);
+        mos.write("meta", new IntWritable(meta.getPartitionId()), new Text(meta.toString()),
                 metaFileName);
         mos.close();
     }
@@ -46,6 +52,7 @@ public class SortReducer extends
     public void reduce(IntWritable key, Iterable<Text> values,
                        Context context
     ) throws IOException, InterruptedException {
+        // NOTE: the count is key count, not value count, it should be split
         count++;
         if (minKey == null || minKey > key.get()) {
             minKey = key.get();
