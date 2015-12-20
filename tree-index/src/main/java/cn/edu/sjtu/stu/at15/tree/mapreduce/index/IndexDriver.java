@@ -28,7 +28,6 @@ public class IndexDriver extends Configured implements Tool {
         job.setJobName("index");
         job.setJarByClass(IndexDriver.class);
 
-//        Path inputPath = new Path(PathConstant.SORTED_FILE_LIST);
         Path inputPath = new Path(PathConstant.SORT_META_OUTPUT);
         Path outputPath = new Path(PathConstant.INDEX_OUTPUT);
 
