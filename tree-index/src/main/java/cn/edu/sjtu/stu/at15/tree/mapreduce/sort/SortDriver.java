@@ -62,9 +62,9 @@ public class SortDriver extends Configured implements Tool {
         InputSampler.writePartitionFile(job, new InputSampler.RandomSampler(
                 1, 10000));
 
-//        // set multiple output
-//        MultipleOutputs.addNamedOutput(job, "meta", TextOutputFormat.class,
-//                Text.class, Text.class);
+        // set multiple output
+        MultipleOutputs.addNamedOutput(job, "meta", TextOutputFormat.class,
+                IntWritable.class, Text.class);
 
         // clean up the old output path
         outputPath.getFileSystem(job.getConfiguration()).delete(outputPath, true);
