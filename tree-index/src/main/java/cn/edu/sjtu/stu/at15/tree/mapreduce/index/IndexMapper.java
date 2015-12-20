@@ -31,7 +31,7 @@ public class IndexMapper extends
         String[] columns = line.split("\\t");
         Integer partitionId = Integer.parseInt(columns[0]);
         String partitionFile = PathConstant.SORT_OUTPUT + "/" + "part-r-" + nf.format(partitionId);
-        LOGGER.info("partition file is " + partitionFile);
+//        LOGGER.info("partition file is " + partitionFile);
         context.write(new Text(partitionFile), value);
     }
 }

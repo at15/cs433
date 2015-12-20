@@ -1,7 +1,5 @@
 package cn.edu.sjtu.stu.at15.tree.mapreduce.index;
 
-import cn.edu.sjtu.stu.at15.tree.bptree.BPlusTree;
-import cn.edu.sjtu.stu.at15.tree.bptree.impl.DummyTree;
 import cn.edu.sjtu.stu.at15.tree.mapreduce.PathConstant;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.hadoop.fs.FileSystem;
@@ -43,12 +41,9 @@ public class IndexReducer extends
         SortedFileIterator iterator = new SortedFileIterator(br);
 
         String indexFileName = PathConstant.LOCAL_INDEX_FOLDER + "/" + new String(Base64.encodeBase64(key.getBytes()));
-//        BTree bt = new BTreeBuilder().valuesInMemory(true)
         BTree bt = new BTreeBuilder().valuesInMemory(true)
                 .build(new CBInt(), new CBString(), indexFileName);
         bt.createIndex(iterator);
-//        bt.put(new CBInt(427),new CBString("I am dumb"));
-//        LOGGER.info("get key 427 " + bt.get(new CBInt(427)));
         bt.save();
         bt.close();
         // TODO: write meta data as well, the mapper may need more data
