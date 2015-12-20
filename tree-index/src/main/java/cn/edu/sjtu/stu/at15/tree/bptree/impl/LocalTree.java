@@ -5,19 +5,20 @@ import cn.edu.sjtu.stu.at15.tree.bptree.KeyValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 /**
  * Created by at15 on 15-12-20.
+ *
+ * store tree in local fs
  */
-public class DummyTree<K extends Comparable, V> extends BPlusTree<K, V> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DummyTree.class);
+public class LocalTree<K extends Comparable, V> extends BPlusTree<K, V> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(LocalTree.class);
     private Long size;
     private K minKey;
     private K maxKey;
 
-    public DummyTree() {
+    public LocalTree() {
         size = 0L;
     }
 
@@ -44,7 +45,6 @@ public class DummyTree<K extends Comparable, V> extends BPlusTree<K, V> {
         KeyValue<K, V> kv = sorted.next();
         minKey = kv.key;
         while (kv != null) {
-            size++;
             maxKey = kv.key;
             // should insert it ... the bulk loading logic here
             // bulk insert or sth...

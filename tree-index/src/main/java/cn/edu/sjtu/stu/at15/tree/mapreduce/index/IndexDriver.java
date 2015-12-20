@@ -46,7 +46,7 @@ public class IndexDriver extends Configured implements Tool {
         job.setOutputValueClass(Text.class);
         TextOutputFormat.setOutputPath(job, outputPath);
 
-        // TODO: need a custom partitioner
+        // TODO: need a custom partitioner, otherwise the meta file won't match, could use another mapper
 
         // clean up the old output path
         outputPath.getFileSystem(job.getConfiguration()).delete(outputPath, true);

@@ -45,7 +45,9 @@ public class IndexReducer extends
             BPlusTree<Integer, String> bPlusTree = new DummyTree<Integer, String>();
             bPlusTree.bulkLoading(new PartitionFileIterator(br));
             bPlusTree.save();
-            context.write(key, new Text(bPlusTree.getMinKey() + "\t" + bPlusTree.getMaxKey()));
+            context.write(key, new Text(bPlusTree.getMinKey() +
+                    "\t" + bPlusTree.getMaxKey() +
+                    "\t" + bPlusTree.size()));
         }
 
     }
