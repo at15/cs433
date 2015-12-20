@@ -21,10 +21,10 @@ public class IndexReducer extends
     ) throws IOException, InterruptedException {
         // try if we can read a file, in fact, values should only have
         // one value, which is the partition
-        for (Text val : values) {
-            Path partitionPath = new Path("hdfs://" + val.toString());
-            FileSystem fs = FileSystem.get(context.getConfiguration());
-            BufferedReader br = new BufferedReader(new InputStreamReader(fs.open(partitionPath)));
+//        for (Text val : values) {
+        Path partitionPath = new Path("hdfs://" + key.toString());
+        FileSystem fs = FileSystem.get(context.getConfiguration());
+        BufferedReader br = new BufferedReader(new InputStreamReader(fs.open(partitionPath)));
 //
 //            // line count
 //            Integer lineCount = 0;
@@ -42,13 +42,13 @@ public class IndexReducer extends
 //            }
 //            context.write(key, new Text(String.valueOf(lineCount)));
 
-            BPlusTree<Integer, String> bPlusTree = new DummyTree<Integer, String>();
-            bPlusTree.bulkLoading(new PartitionFileIterator(br));
-            bPlusTree.save();
-            context.write(key, new Text(bPlusTree.getMinKey() +
-                    "\t" + bPlusTree.getMaxKey() +
-                    "\t" + bPlusTree.size()));
-        }
+        BPlusTree<Integer, String> bPlusTree = new DummyTree<Integer, String>();
+        bPlusTree.bulkLoading(new PartitionFileIterator(br));
+        bPlusTree.save();
+        context.write(key, new Text(bPlusTree.getMinKey() +
+                "\t" + bPlusTree.getMaxKey() +
+                "\t" + bPlusTree.size()));
+//        }
 
     }
 }

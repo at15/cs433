@@ -26,6 +26,9 @@ public class SortReducer extends
         mos = new MultipleOutputs<IntWritable, Text>(context);
     }
 
+
+    // meta is
+    // partitionId  start   end
     public void cleanup(Context context) throws IOException, InterruptedException {
         LOGGER.info("min key " + minKey);
         LOGGER.info("max key " + maxKey);
