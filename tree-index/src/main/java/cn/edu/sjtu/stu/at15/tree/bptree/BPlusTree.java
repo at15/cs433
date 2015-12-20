@@ -6,8 +6,15 @@ import java.util.Iterator;
  * Created by at15 on 15-12-20.
  */
 public abstract class BPlusTree<K extends Comparable, V> {
+
     // return value for get single value
     public abstract V get(K key);
+
+    public abstract K getMinKey();
+
+    public abstract K getMaxKey();
+
+    public abstract Long size();
 
     // bulk loading
     public abstract void bulkLoading(Iterator<KeyValue<K, V>> sorted);

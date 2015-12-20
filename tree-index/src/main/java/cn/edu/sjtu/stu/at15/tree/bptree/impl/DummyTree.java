@@ -13,15 +13,42 @@ import java.util.Iterator;
  */
 public class DummyTree<K extends Comparable, V> extends BPlusTree<K, V> {
     private static final Logger LOGGER = LoggerFactory.getLogger(DummyTree.class);
+    private Long size;
+    private K minKey;
+    private K maxKey;
+
+    public DummyTree(){
+        size = 0L;
+    }
 
     // return value for get single value
     public V get(K key) {
         return null;
     }
 
+    public Long size(){
+        return size;
+    }
+
+    public K getMinKey(){
+        return minKey;
+    }
+
+    public K getMaxKey(){
+        return maxKey;
+    }
+
     // bulk loading
     public void bulkLoading(Iterator<KeyValue<K, V>> sorted) {
-
+        // FIXME: use tree map to store
+        KeyValue<K,V> kv =sorted.next();
+        minKey = kv.key;
+        while (kv != null){
+            maxKey = kv.key;
+            // should insert it ... the bulk loading logic here
+            // bulk insert or sth...
+            kv = sorted.next();
+        }
     }
 
     public boolean save(){

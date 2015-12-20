@@ -46,6 +46,8 @@ public class IndexDriver extends Configured implements Tool {
         job.setOutputValueClass(Text.class);
         TextOutputFormat.setOutputPath(job, outputPath);
 
+        // TODO: need a custom partitioner
+
         // clean up the old output path
         outputPath.getFileSystem(job.getConfiguration()).delete(outputPath, true);
 
