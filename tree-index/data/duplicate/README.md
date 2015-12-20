@@ -5,3 +5,5 @@ u.data     -- The full u data set, 100000 ratings by 943 users on 1682 items.
               numbered consecutively from 1.  The data is randomly
               ordered. This is a tab separated list of 
 	         user id | item id | rating | timestamp. 
+
+u.user  replace "|" $'\t' -- u.user    need to convert | to tab in order to use

@@ -4,6 +4,7 @@ import cn.edu.sjtu.stu.at15.tree.mapreduce.index.IndexDriver;
 import cn.edu.sjtu.stu.at15.tree.mapreduce.meta.MetaDriver;
 import cn.edu.sjtu.stu.at15.tree.mapreduce.pre.PreSortDriver;
 import cn.edu.sjtu.stu.at15.tree.mapreduce.sort.SortDriver;
+import cn.edu.sjtu.stu.at15.tree.query.Cli;
 import org.apache.hadoop.util.ToolRunner;
 
 /**
@@ -30,6 +31,10 @@ public class Runner {
             int exitCode = ToolRunner.run(new MetaDriver(), args);
             System.exit(exitCode);
         }
-        System.out.println("unsupported job " + args[0]);
+        if (args[0].equals("query")) {
+            int exitCode = new Cli().run(args);
+            System.exit(exitCode);
+        }
+        System.out.println("unsupported job or action" + args[0]);
     }
 }
