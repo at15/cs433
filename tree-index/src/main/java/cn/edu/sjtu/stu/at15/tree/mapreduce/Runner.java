@@ -4,7 +4,6 @@ import cn.edu.sjtu.stu.at15.tree.mapreduce.index.IndexDriver;
 import cn.edu.sjtu.stu.at15.tree.mapreduce.meta.MetaDriver;
 import cn.edu.sjtu.stu.at15.tree.mapreduce.pre.PreSortDriver;
 import cn.edu.sjtu.stu.at15.tree.mapreduce.sort.SortDriver;
-import cn.edu.sjtu.stu.at15.tree.query.Cli;
 import org.apache.hadoop.util.ToolRunner;
 
 /**
