@@ -7,3 +7,8 @@ u.data     -- The full u data set, 100000 ratings by 943 users on 1682 items.
 	         user id | item id | rating | timestamp. 
 
 u.user  replace "|" $'\t' -- u.user    need to convert | to tab in order to use
+
+u.user     -- Demographic information about the users; this is a tab
+              separated list of
+              user id | age | gender | occupation | zip code
+              The user ids are the ones used in the u.data data set.
