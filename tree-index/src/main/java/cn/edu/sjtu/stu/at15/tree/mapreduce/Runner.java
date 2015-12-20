@@ -31,10 +31,6 @@ public class Runner {
             int exitCode = ToolRunner.run(new MetaDriver(), args);
             System.exit(exitCode);
         }
-        if (args[0].equals("query")) {
-            int exitCode = new Cli().run(args);
-            System.exit(exitCode);
-        }
         System.out.println("unsupported job or action" + args[0]);
     }
 }
