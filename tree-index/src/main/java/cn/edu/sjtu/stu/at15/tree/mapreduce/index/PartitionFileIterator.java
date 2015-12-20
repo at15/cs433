@@ -16,6 +16,7 @@ public class PartitionFileIterator implements Iterator<KeyValue<Integer, String>
 
     public PartitionFileIterator(BufferedReader br) {
         this.br = br;
+        this.end = false;
     }
 
     public boolean hasNext() {
