@@ -1,5 +1,6 @@
 package cn.edu.sjtu.stu.at15.tree.mapreduce.meta;
 
+import cn.edu.sjtu.stu.at15.tree.mapreduce.MetaRow;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
@@ -22,7 +23,7 @@ public class MetaMapper extends
     public void map(LongWritable key, Text value, Context context)
             throws IOException, InterruptedException {
         String line = value.toString();
-        String[] columns = line.split("\\t");
-        context.write(new Text(columns[0]), value);
+        MetaRow meta = new MetaRow(line);
+        context.write(new Text(meta.getPartitionIdAsString()), new Text(meta.withOutPartitionId()));
     }
 }
