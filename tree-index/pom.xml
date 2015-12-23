@@ -21,6 +21,12 @@
             <artifactId>core</artifactId>
             <version>2.2</version>
         </dependency>
+        <!-- build fail because collections/DiscBasedHashMap.java:[239,42] incompatible types: java.lang.Object cannot be converted to K -->
+        <!--<dependency>-->
+            <!--<groupId>com.github.at15</groupId>-->
+            <!--<artifactId>mellowtech-core</artifactId>-->
+            <!--<version>java7-SNAPSHOT</version>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>
